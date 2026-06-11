@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Builds
+.next/
+dist/
+build/
+out/
+*.tsbuildinfo
+.turbo/
+
+# Tests & coverage
+coverage/
+playwright-report/
+test-results/
+blob-report/
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+
+# Local database & pipeline state
+postgres-data/
+.inngest/
+
+# OS / editor / logs
+.DS_Store
+*.log
+.idea/
+.vscode/

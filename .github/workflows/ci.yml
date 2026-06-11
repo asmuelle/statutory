@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: statutory
+          POSTGRES_PASSWORD: statutory
+          POSTGRES_DB: statutory_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U statutory"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgres://statutory:statutory@localhost:5432/statutory_test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install just
+        uses: extractions/setup-just@v3
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable corepack (pnpm)
+        run: corepack enable
+
+      - name: Bootstrap guard
+        id: guard
+        run: |
+          if [ -f package.json ]; then
+            echo "bootstrapped=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "bootstrapped=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::package.json not found — docs-only scaffold; skipping install and just ci (stays green until M0)."
+          fi
+
+      - name: Install dependencies
+        if: steps.guard.outputs.bootstrapped == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Run full gate (just ci)
+        if: steps.guard.outputs.bootstrapped == 'true'
+        run: just ci

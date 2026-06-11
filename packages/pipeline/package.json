@@ -1,0 +1,25 @@
+{
+  "name": "@statutory/pipeline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pipeline stages over checked-in fixtures: ingest, diff, triage, synthesis (mocked LLMs behind interfaces), verification gate, review, publish, fan-out.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@statutory/core": "workspace:*",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "typescript": "^5.8.0"
+  }
+}

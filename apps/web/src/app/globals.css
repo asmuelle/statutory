@@ -1,0 +1,406 @@
+/* Statutory — annotated statute book, modernized (DESIGN.md).
+   Paper-warm ivory, near-black ink, serif prose, mono citations.
+   Color is strictly semantic: amber = pending effective date,
+   green = span-verified, oxblood = superseded/repealed, slate = review. */
+
+:root {
+  /* Surfaces & ink */
+  --color-paper: oklch(97% 0.01 90);
+  --color-paper-inset: oklch(94.5% 0.012 90);
+  --color-ink: oklch(20% 0.015 75);
+  --color-ink-muted: oklch(42% 0.015 75);
+  --color-rule: oklch(82% 0.015 85);
+
+  /* Semantic — never decorative */
+  --color-pending: oklch(70% 0.14 75);
+  --color-pending-ink: oklch(45% 0.12 75);
+  --color-verified: oklch(52% 0.12 150);
+  --color-verified-bg: oklch(94% 0.035 150);
+  --color-superseded: oklch(42% 0.13 25);
+  --color-superseded-bg: oklch(94% 0.025 25);
+  --color-review: oklch(48% 0.03 250);
+  --color-review-bg: oklch(93% 0.012 250);
+
+  /* Type */
+  --font-serif: 'Newsreader', 'Source Serif 4', 'Iowan Old Style', Charter, Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --text-base: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  --text-small: 0.8125rem;
+  --text-display: clamp(1.9rem, 1.4rem + 2vw, 2.9rem);
+
+  /* Rhythm */
+  --space-line: 0.65rem;
+  --space-block: 1.5rem;
+  --space-section: clamp(2.25rem, 1.5rem + 2.5vw, 4rem);
+  --measure: 46rem;
+  --rule-width: 3px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.page {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: var(--space-section) 1.25rem 4rem;
+}
+
+/* ---------- Masthead ---------- */
+
+.masthead {
+  border-bottom: 2px solid var(--color-ink);
+  padding-bottom: var(--space-block);
+  margin-bottom: var(--space-section);
+}
+
+.masthead-brand {
+  font-size: var(--text-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.35rem;
+}
+
+.masthead-tagline {
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+.masthead-meta {
+  margin-top: var(--space-line);
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Sections ---------- */
+
+.slice-section {
+  margin-bottom: var(--space-section);
+}
+
+.slice-section > h2 {
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-muted);
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: 0.4rem;
+  margin: 0 0 var(--space-block);
+}
+
+/* ---------- Crawl ledger ---------- */
+
+.crawl-ledger {
+  margin: 0;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 0.55rem;
+}
+
+.crawl-ledger dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+  padding-top: 0.1rem;
+}
+
+.crawl-ledger dd {
+  margin: 0;
+}
+
+.invariant-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-verified);
+}
+
+/* ---------- Delta ledger entry ---------- */
+
+.delta-entry {
+  border-left: var(--rule-width) solid var(--color-ink);
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.delta-margin-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-pending-ink);
+  margin-bottom: 0.5rem;
+}
+
+.delta-title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin: 0 0 var(--space-line);
+  letter-spacing: -0.01em;
+}
+
+.delta-body p {
+  margin: 0 0 var(--space-line);
+}
+
+.delta-body h4 {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: 600;
+  margin: var(--space-line) 0 0.3rem;
+}
+
+.delta-label {
+  font-variant: small-caps;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.redline-list {
+  list-style: none;
+  margin: 0 0 var(--space-line);
+  padding: 0;
+}
+
+.redline-list li {
+  padding: 0.2rem 0;
+}
+
+del,
+.redline-removed {
+  text-decoration: line-through;
+  text-decoration-color: var(--color-superseded);
+  color: var(--color-superseded);
+  background: var(--color-superseded-bg);
+}
+
+ins,
+.redline-added {
+  text-decoration: underline;
+  text-decoration-color: var(--color-verified);
+  text-underline-offset: 3px;
+  background: var(--color-verified-bg);
+}
+
+/* ---------- Citations ---------- */
+
+.citation-list {
+  list-style: none;
+  margin: var(--space-block) 0 0;
+  padding: 0;
+}
+
+.citation-list li {
+  margin-bottom: var(--space-line);
+}
+
+.citation-quote {
+  margin: 0;
+  padding: 0.5rem 0.85rem;
+  background: var(--color-paper-inset);
+  border-left: 2px solid var(--color-rule);
+  font-size: 0.9375rem;
+}
+
+.citation-source {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+}
+
+/* ---------- Status stamps ---------- */
+
+.stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid currentcolor;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.stamp-verified {
+  color: var(--color-verified);
+  background: var(--color-verified-bg);
+}
+
+.stamp-pending {
+  color: var(--color-pending-ink);
+}
+
+.stamp-review {
+  color: var(--color-review);
+  background: var(--color-review-bg);
+}
+
+.stamp-superseded {
+  color: var(--color-superseded);
+  background: var(--color-superseded-bg);
+}
+
+/* ---------- Rulebook ---------- */
+
+.rulebook-citation {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+}
+
+.rulebook-heading {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0.2rem 0 var(--space-line);
+}
+
+.rulebook-text p {
+  margin: 0 0 var(--space-line);
+}
+
+.version-ledger {
+  list-style: none;
+  margin: var(--space-block) 0 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+}
+
+.version-ledger li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  padding: 0.45rem 0;
+  border-top: 1px dotted var(--color-rule);
+}
+
+.version-hash {
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Fan-out ---------- */
+
+.delivery-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9375rem;
+}
+
+.delivery-table th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  border-bottom: 1px solid var(--color-rule);
+  padding: 0.35rem 0.75rem 0.35rem 0;
+}
+
+.delivery-table td {
+  border-bottom: 1px dotted var(--color-rule);
+  padding: 0.45rem 0.75rem 0.45rem 0;
+  vertical-align: top;
+}
+
+.email-preview {
+  margin-top: var(--space-block);
+  background: var(--color-paper-inset);
+  border: 1px solid var(--color-rule);
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+}
+
+.email-preview pre {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+/* ---------- Review trail ---------- */
+
+.review-trail {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.review-trail li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-top: 1px dotted var(--color-rule);
+}
+
+.review-notes {
+  flex-basis: 100%;
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+/* ---------- Coverage footer ---------- */
+
+.coverage-footer {
+  border-top: 2px solid var(--color-ink);
+  padding-top: var(--space-block);
+  font-size: 0.9375rem;
+}
+
+.coverage-footer h2 {
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 0 0 var(--space-line);
+}
+
+.coverage-columns {
+  display: grid;
+  gap: var(--space-block);
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+}
+
+.coverage-columns h3 {
+  font-size: var(--text-small);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-ink-muted);
+  margin: 0 0 0.3rem;
+}
+
+.coverage-columns ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.not-monitored li {
+  color: var(--color-superseded);
+}
+
+.legal-framing {
+  margin-top: var(--space-block);
+  font-style: italic;
+  color: var(--color-ink-muted);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}

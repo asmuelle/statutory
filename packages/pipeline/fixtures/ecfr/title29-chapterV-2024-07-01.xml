@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- eCFR Versioner snapshot (fixture): Title 29, Subtitle B, Chapter V — point-in-time 2024-07-01 -->
+<!-- Post-amendment text: 2024 final rule (89 FR 32842, effective July 1, 2024) rewrote § 541.600. -->
+<!-- §§ 541.602, 778.101, 785.1 are substantively unchanged; whitespace/quote churn is deliberate -->
+<!-- to prove the normalizer prevents false change events. -->
+<ECFR>
+  <DIV5 N="541" TYPE="PART">
+    <HEAD>PART 541—DEFINING AND DELIMITING THE EXEMPTIONS FOR EXECUTIVE, ADMINISTRATIVE, PROFESSIONAL, COMPUTER AND OUTSIDE SALES EMPLOYEES</HEAD>
+    <DIV8 N="§ 541.600" TYPE="SECTION">
+      <HEAD>§ 541.600 Amount of salary required.</HEAD>
+      <P>(a) Standard salary level. To qualify as an exempt executive, administrative or professional employee under section 13(a)(1) of the Act, an employee must be compensated on a salary basis at a rate per week of not less than the standard salary level set forth in paragraph (b) of this section, exclusive of board, lodging or other facilities.</P>
+      <P>(b) The standard salary level is: (1) Beginning on July 1, 2024, $844 per week; and (2) Beginning on January 1, 2025, $1,128 per week, which is the 35th percentile of weekly earnings of full-time nonhourly workers in the lowest-wage Census Region.</P>
+      <P>(c) In the case of academic administrative employees, the compensation requirement also may be met by compensation on a salary basis at a rate at least equal to the entrance salary for teachers in the educational establishment by which the employee is employed.</P>
+    </DIV8>
+    <DIV8 N="§ 541.602" TYPE="SECTION">
+      <HEAD>§ 541.602 Salary basis.</HEAD>
+      <P>(a) General rule.  An employee will be considered to be paid on a “salary basis”
+         within the meaning of this part if the employee regularly receives each pay period on a weekly,
+         or less frequent basis, a predetermined amount constituting all or part of the employee’s compensation,
+         which amount is not subject to reduction because of variations in the quality or quantity of the work performed.</P>
+      <P>(b) Exceptions.  The prohibition against deductions from pay in the salary basis requirement is subject
+         to the following exceptions: deductions from pay may be made when an exempt employee is absent from work
+         for one or more full days for personal reasons, other than sickness or disability.</P>
+    </DIV8>
+  </DIV5>
+  <DIV5 N="778" TYPE="PART">
+    <HEAD>PART 778—OVERTIME COMPENSATION</HEAD>
+    <DIV8 N="§ 778.101" TYPE="SECTION">
+      <HEAD>§ 778.101 Maximum nonovertime hours.</HEAD>
+      <P>As a general standard, section 7(a) of the Act provides 40 hours as the maximum number that an employee subject to its provisions may work for an employer in any workweek without receiving additional compensation at not less than the statutory rate for overtime.</P>
+    </DIV8>
+  </DIV5>
+  <DIV5 N="785" TYPE="PART">
+    <HEAD>PART 785—HOURS WORKED</HEAD>
+    <DIV8 N="§ 785.1" TYPE="SECTION">
+      <HEAD>§ 785.1 Introductory statement.</HEAD>
+      <P>Section 6 of the Fair Labor Standards Act of 1938, as amended, hereinafter referred to as the Act, requires that each employee, not specifically exempted, who is engaged in commerce, receive a specified minimum wage. Section 7 of the Act provides that persons may not be employed for more than a stated number of hours a week without receiving at least one and one-half times their regular rate of pay for the overtime hours.</P>
+    </DIV8>
+  </DIV5>
+</ECFR>
