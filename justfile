@@ -43,11 +43,21 @@ db-down:
 migrate: _bootstrapped
     pnpm --filter @statutory/db migrate
 
-# Run unit/integration tests (Vitest, workspace-wide)
+# Run unit/integration tests (Vitest, workspace-wide; no database needed)
 test: _bootstrapped
     pnpm test
 
-# Run end-to-end tests (Playwright)
+# Run DB-backed integration tests (publish-gate triggers; needs DATABASE_URL)
+test-db: _bootstrapped
+    @if [ -z "${DATABASE_URL:-}" ]; then \
+        echo "ERROR: DATABASE_URL is not set — the DB trust-gate suite needs Postgres."; \
+        echo "Run:  just db-up && just migrate   then re-run with, e.g.:"; \
+        echo "  DATABASE_URL=postgres://statutory:statutory@localhost:5434/statutory_dev just test-db"; \
+        exit 1; \
+    fi
+    pnpm test:db
+
+# Run end-to-end tests (Playwright, chromium; starts its own Next dev server)
 e2e: _bootstrapped
     pnpm e2e
 

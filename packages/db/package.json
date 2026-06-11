@@ -2,7 +2,7 @@
   "name": "@statutory/db",
   "version": "0.1.0",
   "private": true,
-  "description": "Drizzle ORM schema for the Statutory data model (Postgres + pgvector). Schema-only in M1: compiles and type-checks without a live database.",
+  "description": "Drizzle ORM schema, migrations, and the publish-path repository for the Statutory data model (Postgres + pgvector). The approved-before-publish gate is enforced by DB triggers (M2).",
   "type": "module",
   "exports": {
     ".": {
@@ -13,13 +13,18 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit",
-    "migrate": "node ./scripts/migrate.mjs"
+    "migrate": "node ./scripts/migrate.mjs",
+    "generate": "drizzle-kit generate"
   },
   "dependencies": {
-    "drizzle-orm": "^0.44.0"
+    "drizzle-orm": "^0.44.0",
+    "pg": "^8.16.0"
   },
   "devDependencies": {
+    "@statutory/core": "workspace:*",
+    "@statutory/pipeline": "workspace:*",
     "@types/node": "^22.15.0",
+    "@types/pg": "^8.15.0",
     "drizzle-kit": "^0.31.0",
     "typescript": "^5.8.0"
   }

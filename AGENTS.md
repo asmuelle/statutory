@@ -32,8 +32,9 @@ message until the workspace is bootstrapped (M0).
 | `just dev` | Run dev servers (web + Inngest dev) |
 | `just db-up` / `just db-down` | Start/stop local Postgres (pgvector) |
 | `just migrate` | Apply Drizzle migrations |
-| `just test` | Vitest unit/integration tests |
-| `just e2e` | Playwright end-to-end tests |
+| `just test` | Vitest unit/integration tests (no DB required) |
+| `just test-db` | DB trust-gate integration tests (requires `DATABASE_URL`; see TOOLS.md) |
+| `just e2e` | Playwright end-to-end tests (chromium; self-managed dev server) |
 | `just lint` / `just format` | ESLint / Prettier |
 | `just typecheck` | `tsc --noEmit` across workspace |
 | `just build` | Production build |

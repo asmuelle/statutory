@@ -60,6 +60,18 @@ export interface CreateDeltaInput {
   readonly citations: readonly Citation[];
 }
 
+/**
+ * A reviewer's edit to an unpublished delta. Citations are accepted without
+ * verification stamps on purpose: EVERY edit resets verification to pending
+ * and strips verifiedAt, so the gate must re-run before publication (M2).
+ */
+export interface DeltaDraftPatch {
+  readonly title?: string;
+  readonly bodyMd?: string;
+  readonly effectiveDate?: string;
+  readonly citations?: readonly Pick<Citation, 'citation' | 'sectionVersionId' | 'quoteSpan'>[];
+}
+
 export interface MemoryStore {
   getSectionByCitation(citation: string): CanonicalSection | undefined;
   getSection(sectionId: string): CanonicalSection | undefined;
@@ -81,6 +93,8 @@ export interface MemoryStore {
   listChangeEvents(): readonly ChangeEvent[];
   createDelta(input: CreateDeltaInput): Delta;
   getDelta(deltaId: string): Delta | undefined;
+  listDeltas(): readonly Delta[];
+  updateDeltaDraft(deltaId: string, patch: DeltaDraftPatch): Delta;
   setDeltaVerification(
     deltaId: string,
     status: VerificationStatus,
@@ -237,6 +251,32 @@ export const createMemoryStore = (): MemoryStore => {
       return delta;
     },
     getDelta: (deltaId) => deltas.get(deltaId),
+    listDeltas: () => [...deltas.values()],
+    updateDeltaDraft: (deltaId, patch) => {
+      const delta = requireDelta(deltaId);
+      if (delta.publishedAt !== null) {
+        throw new PublicationBlockedError(
+          `Delta ${deltaId} is published — published content is immutable; ` +
+            'a correction must ship as a new delta.',
+        );
+      }
+      const citations = (patch.citations ?? delta.citations).map((c) => ({
+        citation: c.citation,
+        sectionVersionId: c.sectionVersionId,
+        quoteSpan: c.quoteSpan,
+        verifiedAt: null,
+      }));
+      const updated: Delta = Object.freeze({
+        ...delta,
+        title: patch.title ?? delta.title,
+        bodyMd: patch.bodyMd ?? delta.bodyMd,
+        effectiveDate: patch.effectiveDate ?? delta.effectiveDate,
+        citations,
+        verificationStatus: 'pending' as const,
+      });
+      deltas.set(deltaId, updated);
+      return updated;
+    },
     setDeltaVerification: (deltaId, status, citations) => {
       const delta = requireDelta(deltaId);
       const updated = Object.freeze({ ...delta, verificationStatus: status, citations });

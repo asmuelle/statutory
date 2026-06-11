@@ -7,7 +7,8 @@ services:
       POSTGRES_PASSWORD: statutory
       POSTGRES_DB: statutory_dev
     ports:
-      - '5432:5432'
+      # Host port 5434 to avoid collisions with other local Postgres instances.
+      - '5434:5432'
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
     healthcheck:

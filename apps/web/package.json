@@ -2,11 +2,12 @@
   "name": "@statutory/web",
   "version": "0.1.0",
   "private": true,
-  "description": "Next.js 15 App Router surface: read-only living rulebook rendered from the fixture-backed M1 pipeline slice.",
+  "description": "Next.js 15 App Router surface: living rulebook plus the interactive attorney review queue (M2) over the fixture-backed pipeline.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@statutory/core": "workspace:*",
@@ -16,6 +17,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.53.0",
     "@types/node": "^22.15.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

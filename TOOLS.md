@@ -7,11 +7,12 @@
 | `just` | Lists all recipes | Orientation |
 | `just setup` | `corepack enable` + `pnpm install` | After clone / lockfile change |
 | `just dev` | `pnpm dev` — Next.js app + Inngest dev server | Daily development |
-| `just db-up` | `docker compose up -d postgres` (pgvector/pgvector:pg16) | Before dev/test needing DB |
+| `just db-up` | `docker compose up -d postgres` (pgvector/pgvector:pg16, host port **5434**) | Before dev/test needing DB |
 | `just db-down` | Stops the Postgres container | Cleanup |
-| `just migrate` | Drizzle migrations via `packages/db` | After schema changes, after pull |
-| `just test` | `pnpm test` (Vitest, workspace-wide) | Before every commit; in TDD loop |
-| `just e2e` | `pnpm e2e` (Playwright) | Before PR; after UI/flow changes |
+| `just migrate` | Applies `packages/db/drizzle` migrations (no-op + warning without `DATABASE_URL`); generate new ones with `pnpm --filter @statutory/db generate` | After schema changes, after pull |
+| `just test` | `pnpm test` (Vitest, workspace-wide; **no database needed**) | Before every commit; in TDD loop |
+| `just test-db` | DB trust-gate integration suite (`vitest.db.config.ts`, `packages/db/src/*.dbtest.ts`); **requires `DATABASE_URL`**, fails fast with instructions otherwise | After `just db-up && just migrate`; runs in GitHub CI against the service container |
+| `just e2e` | `pnpm e2e` → Playwright (chromium only) against the review queue + rulebook; starts/stops its own `next dev` on port 3902 | Before PR; after UI/flow changes |
 | `just lint` | `pnpm lint` (ESLint) | Before commit (hook also auto-fixes) |
 | `just format` | `pnpm format` (Prettier write) | Rarely needed manually (hook formats) |
 | `just typecheck` | `pnpm typecheck` (`tsc --noEmit`) | Before commit |
@@ -58,8 +59,17 @@ Keep a committed `.env.example` with names only. Validate presence at startup; f
 ## Local Services
 
 - **Postgres 16 + pgvector** via `docker compose` (`pgvector/pgvector:pg16`), started
-  with `just db-up`. Owns versioned rulebook sections, effective-date history, profiles,
-  review queue, and embeddings for the topic taxonomy.
+  with `just db-up` on **host port 5434** (chosen to avoid collisions with other local
+  Postgres instances; `DATABASE_URL=postgres://statutory:statutory@localhost:5434/statutory_dev`).
+  Owns versioned rulebook sections, effective-date history, profiles, review queue, and
+  embeddings for the topic taxonomy. Migration `0002_trust_gate.sql` installs the M2
+  trust triggers: deltas cannot gain `published_at` unless gate-verified with every
+  citation stamped AND the latest review record is `approved`; published deltas,
+  `section_versions`, and `review_records` are immutable/append-only at the DB level.
+- **Playwright (chromium)** drives `just e2e`: review-queue approve/reject/edit flows
+  with a mock reviewer session (httpOnly cookie) plus rulebook provenance/coverage
+  checks. One-time setup: `pnpm --filter @statutory/web exec playwright install chromium`.
+  Test isolation via `POST /api/test/reset` (disabled in production builds).
 - **Inngest dev server** runs inside `just dev` for local cron/step execution.
 
 ## CI (.github/workflows/ci.yml)
@@ -69,8 +79,10 @@ Keep a committed `.env.example` with names only. Validate presence at startup; f
 - **Bootstrap guard:** if `package.json` is absent, the job emits a notice and skips
   install/build steps — the docs-only scaffold stays green. Once M0 lands, the full
   `pnpm install --frozen-lockfile` + `just ci` path runs automatically.
-- A `pgvector/pgvector:pg16` service container is wired via `DATABASE_URL` for tests
-  (only exercised once bootstrapped).
+- A `pgvector/pgvector:pg16` service container is wired via `DATABASE_URL`; after
+  `just ci` the workflow runs `just migrate` + `just test-db` against it, so the
+  DB-enforced publish gate is exercised on every push. `just ci` itself never needs
+  a database (DB suites live in `vitest.db.config.ts` and skip without `DATABASE_URL`).
 
 ## AI Harness Notes (.claude/settings.json)
 

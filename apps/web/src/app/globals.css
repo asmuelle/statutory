@@ -404,3 +404,184 @@ code {
   font-family: var(--font-mono);
   font-size: 0.875em;
 }
+
+/* ---------- Review queue (M2) ---------- */
+
+.masthead-compact {
+  padding-bottom: var(--space-block);
+}
+
+.masthead-kicker {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+}
+
+.masthead-kicker a {
+  color: var(--color-ink-muted);
+  text-decoration: none;
+}
+
+.masthead-kicker a:hover,
+.masthead-kicker a:focus-visible {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.review-error {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-superseded);
+  background: var(--color-superseded-bg);
+  border-left: var(--rule-width) solid var(--color-superseded);
+  padding: 0.6rem 0.9rem;
+  margin: 0 0 var(--space-block);
+}
+
+.reviewer-bar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: 0.5rem;
+  margin-bottom: var(--space-block);
+}
+
+.review-signin-note {
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+.queue-count {
+  color: var(--color-ink-muted);
+}
+
+.queue-entry {
+  margin-bottom: var(--space-section);
+}
+
+.queue-terminal-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+  margin: var(--space-block) 0 0;
+}
+
+.citation-provenance {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-ink-muted);
+}
+
+.review-actions {
+  display: grid;
+  gap: var(--space-block);
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-top: var(--space-block);
+  border-top: 1px dotted var(--color-rule);
+  padding-top: var(--space-block);
+}
+
+.review-form {
+  display: grid;
+  gap: 0.4rem;
+  align-content: start;
+}
+
+.review-form label {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+}
+
+.review-form input[type='text'],
+.review-form textarea {
+  font-family: var(--font-serif);
+  font-size: 0.9375rem;
+  color: var(--color-ink);
+  background: var(--color-paper-inset);
+  border: 1px solid var(--color-rule);
+  border-radius: 2px;
+  padding: 0.45rem 0.6rem;
+}
+
+.review-form input[type='text']:focus-visible,
+.review-form textarea:focus-visible {
+  outline: 2px solid var(--color-review);
+  outline-offset: 1px;
+}
+
+.review-form-inline {
+  grid-template-columns: max-content minmax(12rem, 20rem) max-content;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink);
+  background: var(--color-paper);
+  border: 1px solid var(--color-ink);
+  border-radius: 2px;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  justify-self: start;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.btn-primary {
+  border-color: var(--color-verified);
+  color: var(--color-verified);
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: var(--color-verified);
+  color: var(--color-paper);
+}
+
+.btn-danger {
+  border-color: var(--color-superseded);
+  color: var(--color-superseded);
+}
+
+.btn-danger:hover,
+.btn-danger:focus-visible {
+  background: var(--color-superseded);
+  color: var(--color-paper);
+}
+
+.btn-quiet {
+  border-color: var(--color-rule);
+  color: var(--color-ink-muted);
+}
+
+.audit-trail {
+  margin-top: var(--space-block);
+}
+
+.audit-trail summary {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  padding-bottom: 0.3rem;
+}

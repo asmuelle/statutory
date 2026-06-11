@@ -8,3 +8,4 @@ export * from './taxonomy.js';
 export * from './profileMatch.js';
 export * from './coverage.js';
 export * from './gate.js';
+export * from './reviewMachine.js';

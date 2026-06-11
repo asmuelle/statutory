@@ -5,5 +5,7 @@ export * from './llm/types.js';
 export * from './llm/mockModels.js';
 export * from './store.js';
 export * from './pipeline.js';
+export * from './review.js';
+export * from './reviewQueueFixture.js';
 export * from './alerts.js';
 export * from './scenario.js';

@@ -55,3 +55,11 @@ jobs:
       - name: Run full gate (just ci)
         if: steps.guard.outputs.bootstrapped == 'true'
         run: just ci
+
+      - name: Apply migrations (service container)
+        if: steps.guard.outputs.bootstrapped == 'true'
+        run: just migrate
+
+      - name: DB trust-gate integration tests (just test-db)
+        if: steps.guard.outputs.bootstrapped == 'true'
+        run: just test-db

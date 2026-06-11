@@ -162,6 +162,8 @@ export const reviewRecords = pgTable('review_records', {
   status: reviewStatus('status').notNull().default('pending'),
   notes: text('notes').notNull().default(''),
   decidedAt: timestamp('decided_at', { withTimezone: true }),
+  /** Audit ordering: the publish trigger checks the LATEST record (M2). */
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
 });
 
 export const deliveries = pgTable('deliveries', {

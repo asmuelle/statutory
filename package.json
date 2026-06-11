@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "pnpm --filter @statutory/web dev",
     "test": "vitest run --coverage",
-    "e2e": "echo 'Playwright e2e is deferred until the review-queue UI lands (post-M1); no e2e specs exist yet.' && exit 0",
+    "test:db": "vitest run --config vitest.db.config.ts",
+    "e2e": "pnpm --filter @statutory/web e2e",
     "lint": "eslint .",
     "format": "prettier --write .",
     "typecheck": "pnpm -r typecheck",

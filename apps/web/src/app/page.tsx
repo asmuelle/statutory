@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { runDolOvertimeScenario } from '@statutory/pipeline';
 
 import { CoverageFooter } from '../components/CoverageFooter';
@@ -24,6 +26,9 @@ export default async function HomePage() {
           before publication.
         </p>
         <p className="masthead-meta">{result.coverageStatement}</p>
+        <p className="masthead-kicker">
+          <Link href="/review">Attorney review queue →</Link>
+        </p>
       </header>
 
       <main>
