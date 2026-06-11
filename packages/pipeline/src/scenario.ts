@@ -28,6 +28,7 @@ import { parseEcfrXml } from './sources/ecfr.js';
 import { parseFederalRegisterDoc } from './sources/federalRegister.js';
 import type { FederalRegisterDoc } from './sources/federalRegister.js';
 import { createMemoryStore } from './store.js';
+import type { MemoryStore } from './store.js';
 
 /**
  * The M1 acceptance scenario: replay the 2024 DOL exempt-salary-threshold
@@ -75,6 +76,8 @@ export interface RulebookSectionView {
 }
 
 export interface ScenarioResult {
+  /** The seeded store, exposed for surfaces that scope per profile (M3). */
+  readonly store: MemoryStore;
   readonly profiles: readonly PracticeProfile[];
   readonly baselineReport: CrawlReport;
   readonly recrawlReport: CrawlReport;
@@ -185,6 +188,7 @@ export const runDolOvertimeScenario = async (options?: {
   }
 
   return {
+    store,
     profiles: DEMO_PROFILES,
     baselineReport,
     recrawlReport,

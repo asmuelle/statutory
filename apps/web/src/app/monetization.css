@@ -1,0 +1,413 @@
+/* Statutory M3 — onboarding wizard, scoped rulebook, client-alert sheet.
+   Extends globals.css tokens; same annotated-statute-book direction.
+   Print rules at the bottom: the alert sheet is the artifact. */
+
+/* ---------- Wizard ---------- */
+
+.wizard {
+  display: grid;
+  gap: var(--space-block);
+}
+
+.wizard-step {
+  border: 1px solid var(--color-rule);
+  border-left: var(--rule-width) solid var(--color-ink);
+  padding: var(--space-block);
+  margin: 0;
+}
+
+.wizard-step legend {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0 0.5rem;
+}
+
+.wizard-step-number {
+  color: var(--color-pending-ink);
+  margin-right: 0.4rem;
+}
+
+.wizard-hint {
+  margin: var(--space-line) 0 0;
+  color: var(--color-ink-muted);
+  font-size: var(--text-small);
+  font-style: italic;
+}
+
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: var(--space-line);
+}
+
+.plan-card {
+  display: grid;
+  gap: 0.3rem;
+  border: 1px solid var(--color-rule);
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  background: var(--color-paper);
+}
+
+.plan-card:hover,
+.plan-card:focus-within {
+  border-color: var(--color-ink);
+  background: var(--color-paper-inset);
+}
+
+.plan-card input[type='radio'] {
+  accent-color: var(--color-ink);
+}
+
+.plan-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.plan-price {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+}
+
+.plan-interval {
+  color: var(--color-ink-muted);
+}
+
+.plan-features {
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.4rem 1rem;
+}
+
+.option-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0;
+}
+
+.option-check input[type='checkbox'] {
+  accent-color: var(--color-ink);
+}
+
+.wizard-text-fields {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: var(--space-block);
+  max-width: 28rem;
+}
+
+.wizard-text-fields label {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+}
+
+.wizard-text-fields input[type='text'] {
+  font-family: var(--font-serif);
+  font-size: var(--text-base);
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.wizard-text-fields input[type='text']:focus-visible {
+  outline: 2px solid var(--color-review);
+  outline-offset: 1px;
+}
+
+.wizard-submit {
+  justify-self: start;
+  font-size: 1rem;
+  padding: 0.6rem 1.4rem;
+}
+
+.wizard-notice {
+  border-left: var(--rule-width) solid var(--color-verified);
+  background: var(--color-verified-bg);
+  padding: 0.6rem 0.9rem;
+  font-size: var(--text-small);
+}
+
+/* ---------- Upgrade prompt ---------- */
+
+.upgrade-prompt {
+  border: 1px solid var(--color-pending-ink);
+  border-left: var(--rule-width) solid var(--color-pending);
+  background: oklch(96% 0.04 80);
+  padding: var(--space-block);
+  margin-bottom: var(--space-block);
+}
+
+.upgrade-prompt h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-pending-ink);
+}
+
+.upgrade-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-line);
+  margin-top: var(--space-line);
+}
+
+.upgrade-note {
+  margin: var(--space-line) 0 0;
+  font-size: var(--text-small);
+  font-style: italic;
+  color: var(--color-ink-muted);
+}
+
+/* ---------- Scoped rulebook ---------- */
+
+.billing-banner {
+  border-left: var(--rule-width) solid var(--color-pending);
+  background: oklch(96% 0.04 80);
+  padding: 0.6rem 0.9rem;
+  font-size: var(--text-small);
+  margin-bottom: var(--space-block);
+}
+
+.profile-summary {
+  margin: 0;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 1.25rem;
+  row-gap: 0.45rem;
+}
+
+.profile-summary dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+  padding-top: 0.1rem;
+}
+
+.profile-summary dd {
+  margin: 0;
+}
+
+.delta-feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.delta-feed-actions {
+  margin: var(--space-line) 0 0;
+}
+
+.empty-note {
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+.scoped-sections {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.scoped-sections li {
+  display: grid;
+  gap: 0.2rem;
+  border-left: var(--rule-width) solid var(--color-rule);
+  padding-left: 0.9rem;
+}
+
+.scoped-heading {
+  font-weight: 600;
+}
+
+/* ---------- Client-alert sheet ---------- */
+
+.alert-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-line) var(--space-block);
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: var(--space-line);
+  margin-bottom: var(--space-section);
+  font-size: var(--text-small);
+}
+
+.alert-toolbar a {
+  color: var(--color-ink);
+}
+
+.variant-switch a[aria-current='page'] {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.variant-note {
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+.copy-status {
+  font-size: var(--text-small);
+  color: var(--color-superseded);
+  margin-left: 0.5rem;
+}
+
+.alert-sheet {
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  padding: clamp(1.5rem, 1rem + 2vw, 3rem);
+  max-width: 44rem;
+}
+
+.alert-letterhead {
+  border-bottom: 2px solid var(--color-ink);
+  padding-bottom: var(--space-line);
+  margin-bottom: var(--space-block);
+}
+
+.alert-firm {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.alert-kind {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--color-ink-muted);
+}
+
+.alert-byline {
+  margin: 0.2rem 0 0;
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+  font-style: italic;
+}
+
+.alert-title {
+  font-size: 1.6rem;
+  margin: 0 0 0.4rem;
+  line-height: 1.25;
+}
+
+.alert-effective {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  color: var(--color-pending-ink);
+  margin: 0 0 var(--space-block);
+}
+
+.alert-intro {
+  font-style: italic;
+  color: var(--color-ink-muted);
+}
+
+.alert-redline del {
+  background: var(--color-superseded-bg);
+  text-decoration-color: var(--color-superseded);
+}
+
+.alert-redline ins {
+  background: var(--color-verified-bg);
+  text-decoration: underline;
+  text-decoration-color: var(--color-verified);
+}
+
+.alert-section-heading {
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-ink-muted);
+  border-bottom: 1px solid var(--color-rule);
+  padding-bottom: 0.3rem;
+  margin: var(--space-section) 0 var(--space-block);
+}
+
+.alert-footnotes {
+  margin: 0;
+  padding-left: 1.4rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.alert-frame {
+  margin-top: var(--space-section);
+  border-top: 1px solid var(--color-rule);
+  padding-top: var(--space-block);
+  font-size: var(--text-small);
+  color: var(--color-ink-muted);
+}
+
+.alert-coverage,
+.alert-closing {
+  margin: 0 0 var(--space-line);
+}
+
+/* ---------- Print: the sheet is the artifact ---------- */
+
+@media print {
+  .no-print,
+  .coverage-footer nav,
+  .masthead-kicker {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+    font-size: 11pt;
+  }
+
+  .page {
+    max-width: none;
+    padding: 0;
+  }
+
+  .alert-sheet {
+    border: none;
+    padding: 0;
+    max-width: none;
+  }
+
+  .alert-letterhead {
+    border-bottom-color: #000;
+  }
+
+  .citation-quote,
+  .alert-footnotes li {
+    break-inside: avoid;
+  }
+
+  .stamp {
+    border: 1px solid #000;
+    background: none !important;
+    color: #000 !important;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+}

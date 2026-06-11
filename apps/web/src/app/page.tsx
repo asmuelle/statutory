@@ -27,6 +27,7 @@ export default async function HomePage() {
         </p>
         <p className="masthead-meta">{result.coverageStatement}</p>
         <p className="masthead-kicker">
+          <Link href="/onboarding">Set up your rulebook →</Link> ·{' '}
           <Link href="/review">Attorney review queue →</Link>
         </p>
       </header>

@@ -9,3 +9,8 @@ export * from './profileMatch.js';
 export * from './coverage.js';
 export * from './gate.js';
 export * from './reviewMachine.js';
+export * from './entitlements.js';
+export * from './billingLifecycle.js';
+export * from './billingProvider.js';
+export * from './onboarding.js';
+export * from './clientAlert.js';
