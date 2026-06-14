@@ -12,6 +12,8 @@
     "dev": "pnpm --filter @statutory/web dev",
     "test": "vitest run --coverage",
     "test:db": "vitest run --config vitest.db.config.ts",
+    "test:live": "vitest run --config vitest.live.config.ts",
+    "daily": "tsx packages/pipeline/src/daily/cli.ts",
     "e2e": "pnpm --filter @statutory/web e2e",
     "lint": "eslint .",
     "format": "prettier --write .",
@@ -25,6 +27,7 @@
     "eslint": "^9.30.0",
     "eslint-config-prettier": "^10.1.0",
     "prettier": "^3.5.0",
+    "tsx": "^4.19.0",
     "typescript": "^5.8.0",
     "typescript-eslint": "^8.35.0",
     "vitest": "^3.2.0"

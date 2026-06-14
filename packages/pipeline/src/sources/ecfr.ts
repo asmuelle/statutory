@@ -3,18 +3,27 @@ import { z } from 'zod';
 import type { ParsedSection } from '@statutory/core';
 
 /**
- * Deterministic parser for the eCFR Versioner XML subset used by the M1
- * fixtures (DIV8 SECTION blocks with HEAD and P children). Pure code, no
- * model anywhere near parsing (invariant 6). Malformed input fails loudly so
- * the pipeline can dead-letter it — never a silent skip.
+ * Deterministic parser for eCFR Versioner XML (DIV8 SECTION blocks with HEAD
+ * and P children). Handles both the M1 fixture form (`N="§ 541.600"`, bare
+ * attributes) and the live Versioner API form (`N="541.600"`, extra
+ * attributes like hierarchy_metadata, inline markup such as <I> inside
+ * paragraphs). Pure code, no model anywhere near parsing (invariant 6).
+ * Malformed input fails loudly so the pipeline can dead-letter it — never a
+ * silent skip.
  */
 
-const SECTION_BLOCK = /<DIV8 N="§ (\d+\.\d+)" TYPE="SECTION">([\s\S]*?)<\/DIV8>/g;
+const SECTION_BLOCK = /<DIV8\s+N="(?:§ )?(\d+\.\d+)"\s+TYPE="SECTION"[^>]*>([\s\S]*?)<\/DIV8>/g;
 const HEAD_TAG = /<HEAD>([\s\S]*?)<\/HEAD>/;
 const PARA_TAG = /<P>([\s\S]*?)<\/P>/g;
+const INLINE_TAGS = /<\/?[A-Za-z][^>]*>/g;
 
 const decodeEntities = (text: string): string =>
-  text.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+  text
+    .replace(INLINE_TAGS, '')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"');
 
 const parsedSectionSchema = z.object({
   citation: z.string().regex(/^\d+ CFR § \d+\.\d+$/),

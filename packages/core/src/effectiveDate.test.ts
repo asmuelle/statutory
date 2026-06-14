@@ -36,6 +36,23 @@ describe('extractEffectiveDates', () => {
     // Act / Assert
     expect(extractEffectiveDates('No dates here.')).toEqual([]);
   });
+
+  test('extracts "the effective date ... is July 1, 2024" (live FR DATES prose, 89 FR 32842)', () => {
+    // Arrange — exact phrasing observed on the live Federal Register API.
+    const text =
+      'The effective date for this final rule is July 1, 2024. Sections 541.600(a)(2) and 541.601(a)(2) are applicable beginning January 1, 2025.';
+
+    // Act / Assert
+    expect(extractEffectiveDates(text)).toEqual(['2024-07-01']);
+  });
+
+  test('does not let the "effective date is" form reach across sentences', () => {
+    // Arrange
+    const text = 'The effective date is unknown. The hearing is July 1, 2024.';
+
+    // Act / Assert
+    expect(extractEffectiveDates(text)).toEqual([]);
+  });
 });
 
 describe('extractAllDates', () => {

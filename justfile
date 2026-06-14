@@ -61,6 +61,14 @@ test-db: _bootstrapped
 e2e: _bootstrapped
     pnpm e2e
 
+# Run LIVE smoke tests against keyless public APIs (eCFR + Federal Register). Never part of `just ci`.
+test-live: _bootstrapped
+    pnpm test:live
+
+# Run the daily pipeline runner (fixture mode). Pass --live for a real source probe, --json for raw output.
+daily *ARGS: _bootstrapped
+    pnpm daily {{ARGS}}
+
 # Lint the workspace (ESLint)
 lint: _bootstrapped
     pnpm lint

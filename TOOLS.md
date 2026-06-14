@@ -2,57 +2,61 @@
 
 ## just Recipes
 
-| Recipe | What it does | When to run |
-|---|---|---|
-| `just` | Lists all recipes | Orientation |
-| `just setup` | `corepack enable` + `pnpm install` | After clone / lockfile change |
-| `just dev` | `pnpm dev` — Next.js app + Inngest dev server | Daily development |
-| `just db-up` | `docker compose up -d postgres` (pgvector/pgvector:pg16, host port **5434**) | Before dev/test needing DB |
-| `just db-down` | Stops the Postgres container | Cleanup |
-| `just migrate` | Applies `packages/db/drizzle` migrations (no-op + warning without `DATABASE_URL`); generate new ones with `pnpm --filter @statutory/db generate` | After schema changes, after pull |
-| `just test` | `pnpm test` (Vitest, workspace-wide; **no database needed**) | Before every commit; in TDD loop |
-| `just test-db` | DB trust-gate integration suite (`vitest.db.config.ts`, `packages/db/src/*.dbtest.ts`); **requires `DATABASE_URL`**, fails fast with instructions otherwise | After `just db-up && just migrate`; runs in GitHub CI against the service container |
-| `just e2e` | `pnpm e2e` → Playwright (chromium only) against the review queue + rulebook; starts/stops its own `next dev` on port 3902 | Before PR; after UI/flow changes |
-| `just lint` | `pnpm lint` (ESLint) | Before commit (hook also auto-fixes) |
-| `just format` | `pnpm format` (Prettier write) | Rarely needed manually (hook formats) |
-| `just typecheck` | `pnpm typecheck` (`tsc --noEmit`) | Before commit |
-| `just build` | `pnpm build` | Before PR; verifies prod build |
-| `just ci` | lint → typecheck → test → build | The gate. Must be green before commit |
+| Recipe              | What it does                                                                                                                                                                                                                                                                            | When to run                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `just`              | Lists all recipes                                                                                                                                                                                                                                                                       | Orientation                                                                         |
+| `just setup`        | `corepack enable` + `pnpm install`                                                                                                                                                                                                                                                      | After clone / lockfile change                                                       |
+| `just dev`          | `pnpm dev` — Next.js app + Inngest dev server                                                                                                                                                                                                                                           | Daily development                                                                   |
+| `just db-up`        | `docker compose up -d postgres` (pgvector/pgvector:pg16, host port **5434**)                                                                                                                                                                                                            | Before dev/test needing DB                                                          |
+| `just db-down`      | Stops the Postgres container                                                                                                                                                                                                                                                            | Cleanup                                                                             |
+| `just migrate`      | Applies `packages/db/drizzle` migrations (no-op + warning without `DATABASE_URL`); generate new ones with `pnpm --filter @statutory/db generate`                                                                                                                                        | After schema changes, after pull                                                    |
+| `just test`         | `pnpm test` (Vitest, workspace-wide; **no database needed**)                                                                                                                                                                                                                            | Before every commit; in TDD loop                                                    |
+| `just test-db`      | DB trust-gate integration suite (`vitest.db.config.ts`, `packages/db/src/*.dbtest.ts`); **requires `DATABASE_URL`**, fails fast with instructions otherwise                                                                                                                             | After `just db-up && just migrate`; runs in GitHub CI against the service container |
+| `just e2e`          | `pnpm e2e` → Playwright (chromium only) against the review queue + rulebook; starts/stops its own `next dev` on port 3902                                                                                                                                                               | Before PR; after UI/flow changes                                                    |
+| `just test-live`    | `pnpm test:live` → LIVE smoke suite (`vitest.live.config.ts`, `*.livetest.ts`) hitting keyless eCFR + Federal Register APIs with a few polite requests; **never part of `just ci`**, skips gracefully offline                                                                           | Manually, when verifying the live source clients                                    |
+| `just daily [ARGS]` | `pnpm daily` → daily pipeline runner. No args = deterministic fixture run with a full run ledger. `--live` = polite real-source probe (eCFR + Federal Register). `--json` = raw ledger. Never publishes/sends (review queue still gates publication). Schedule via cron/Inngest in prod | Manual run; scheduled entrypoint in prod                                            |
+| `just lint`         | `pnpm lint` (ESLint)                                                                                                                                                                                                                                                                    | Before commit (hook also auto-fixes)                                                |
+| `just format`       | `pnpm format` (Prettier write)                                                                                                                                                                                                                                                          | Rarely needed manually (hook formats)                                               |
+| `just typecheck`    | `pnpm typecheck` (`tsc --noEmit`)                                                                                                                                                                                                                                                       | Before commit                                                                       |
+| `just build`        | `pnpm build`                                                                                                                                                                                                                                                                            | Before PR; verifies prod build                                                      |
+| `just ci`           | lint → typecheck → test → build                                                                                                                                                                                                                                                         | The gate. Must be green before commit                                               |
 
 All recipes print a helpful failure message and exit 1 until the workspace is
 bootstrapped (no `package.json` yet — see DESIGN.md M0).
 
 ## External Data Sources & APIs
 
-| Source | What we pull | Auth env var | Rate/cost notes | Link |
-|---|---|---|---|---|
-| Federal Register API | Daily rule/notice metadata + full text | none | Free, no key; throttle ourselves to ~1 req/s | https://www.federalregister.gov/developers/documentation/api/v1 |
-| eCFR (Versioner API + bulk XML) | Point-in-time CFR section XML — the diffing backbone | none | Free; excellent structured diffability; cache all versions | https://www.ecfr.gov/developers/documentation/api/v1 |
-| GovInfo API | Bulk statute/register packages | `GOVINFO_API_KEY` | Free via api.data.gov; default 1,000 req/hr | https://api.govinfo.gov/docs/ |
-| Regulations.gov v4 | Dockets, proposed rules, comments | `REGULATIONS_GOV_API_KEY` | Free via api.data.gov; ~1,000 req/hr; batch nightly | https://open.gsa.gov/api/regulationsgov/ |
-| OpenStates v3 | State bills/legislation by jurisdiction | `OPENSTATES_API_KEY` | Free tier is tightly throttled (small daily quota) — cache aggressively, sync nightly | https://docs.openstates.org/api-v3/ |
-| CourtListener REST | Case-law signals (e.g., decisions reinterpreting statutes) | `COURTLISTENER_API_TOKEN` | Free; generous authed quota (~5k/hr) | https://www.courtlistener.com/help/api/rest/ |
-| Agency RSS (DOL, IRS, EEOC, NLRB, state agencies) | Sub-regulatory guidance announcements | none | Free; poll daily; per-feed parser registry | per-agency feed URLs in source registry |
-| State register PDFs (~25 states, weekly bulletins) | Scraped via Playwright, parsed via marker/Textract-class pipeline, then diffed against stored canonical text | (AWS creds if Textract is chosen) | The 18-month grind; ship states incrementally, never promise 50 | per-state URLs in source registry |
-| Anthropic API | Haiku-class triage; Sonnet-class delta synthesis | `ANTHROPIC_API_KEY` | Triage budget ~$0.001/change-user pair; synthesis authored once per jurisdiction-topic and fanned out | https://docs.anthropic.com |
-| Resend | Email delta alerts + digests | `RESEND_API_KEY` | Pay-as-you-go; batch sends | https://resend.com/docs |
-| Slack incoming webhooks | Per-user delta alerts | per-user webhook URL stored encrypted in DB (not env) | Free | https://api.slack.com/messaging/webhooks |
-| Inngest | Scheduled crawls + pipeline step functions | `INNGEST_EVENT_KEY`, `INNGEST_SIGNING_KEY` | Free dev server locally (`npx inngest-cli dev`) | https://www.inngest.com/docs |
-| Stripe (M3) | Subscriptions, jurisdiction add-ons | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` | Test mode until launch | https://docs.stripe.com |
+| Source                                             | What we pull                                                                                                 | Auth env var                                          | Rate/cost notes                                                                                       | Link                                                            |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Federal Register API                               | Daily rule/notice metadata + full text                                                                       | none                                                  | Free, no key; throttle ourselves to ~1 req/s                                                          | https://www.federalregister.gov/developers/documentation/api/v1 |
+| eCFR (Versioner API + bulk XML)                    | Point-in-time CFR section XML — the diffing backbone                                                         | none                                                  | Free; excellent structured diffability; cache all versions                                            | https://www.ecfr.gov/developers/documentation/api/v1            |
+| GovInfo API                                        | Bulk statute/register packages                                                                               | `GOVINFO_API_KEY`                                     | Free via api.data.gov; default 1,000 req/hr                                                           | https://api.govinfo.gov/docs/                                   |
+| Regulations.gov v4                                 | Dockets, proposed rules, comments                                                                            | `REGULATIONS_GOV_API_KEY`                             | Free via api.data.gov; ~1,000 req/hr; batch nightly                                                   | https://open.gsa.gov/api/regulationsgov/                        |
+| OpenStates v3                                      | State bills/legislation by jurisdiction                                                                      | `OPENSTATES_API_KEY`                                  | Free tier is tightly throttled (small daily quota) — cache aggressively, sync nightly                 | https://docs.openstates.org/api-v3/                             |
+| CourtListener REST                                 | Case-law signals (e.g., decisions reinterpreting statutes)                                                   | `COURTLISTENER_API_TOKEN`                             | Free; generous authed quota (~5k/hr)                                                                  | https://www.courtlistener.com/help/api/rest/                    |
+| Agency RSS (DOL, IRS, EEOC, NLRB, state agencies)  | Sub-regulatory guidance announcements                                                                        | none                                                  | Free; poll daily; per-feed parser registry                                                            | per-agency feed URLs in source registry                         |
+| State register PDFs (~25 states, weekly bulletins) | Scraped via Playwright, parsed via marker/Textract-class pipeline, then diffed against stored canonical text | (AWS creds if Textract is chosen)                     | The 18-month grind; ship states incrementally, never promise 50                                       | per-state URLs in source registry                               |
+| Anthropic API                                      | Haiku-class triage; Sonnet-class delta synthesis                                                             | `ANTHROPIC_API_KEY`                                   | Triage budget ~$0.001/change-user pair; synthesis authored once per jurisdiction-topic and fanned out | https://docs.anthropic.com                                      |
+| Resend                                             | Email delta alerts + digests                                                                                 | `RESEND_API_KEY`                                      | Pay-as-you-go; batch sends                                                                            | https://resend.com/docs                                         |
+| Slack incoming webhooks                            | Per-user delta alerts                                                                                        | per-user webhook URL stored encrypted in DB (not env) | Free                                                                                                  | https://api.slack.com/messaging/webhooks                        |
+| Inngest                                            | Scheduled crawls + pipeline step functions                                                                   | `INNGEST_EVENT_KEY`, `INNGEST_SIGNING_KEY`            | Free dev server locally (`npx inngest-cli dev`)                                                       | https://www.inngest.com/docs                                    |
+| Stripe (M3)                                        | Subscriptions, jurisdiction add-ons                                                                          | `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`          | Test mode until launch                                                                                | https://docs.stripe.com                                         |
 
 ## Required Env Vars
 
-| Var | Purpose |
-|---|---|
-| `DATABASE_URL` | Postgres connection (local: docker compose; CI: service container) |
-| `ANTHROPIC_API_KEY` | Triage + synthesis model calls |
-| `GOVINFO_API_KEY` | GovInfo bulk data (api.data.gov key) |
-| `REGULATIONS_GOV_API_KEY` | Regulations.gov v4 (api.data.gov key) |
-| `OPENSTATES_API_KEY` | OpenStates v3 state-legislation sync |
-| `COURTLISTENER_API_TOKEN` | CourtListener REST API |
-| `RESEND_API_KEY` | Transactional email + alert digests |
-| `INNGEST_EVENT_KEY` / `INNGEST_SIGNING_KEY` | Pipeline scheduling (prod; dev server needs none) |
-| `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Billing (M3 only) |
+| Var                                           | Purpose                                                                                                                                  |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `DATABASE_URL`                                | Postgres connection (local: docker compose; CI: service container)                                                                       |
+| `ANTHROPIC_API_KEY`                           | Triage + synthesis model calls (absent → deterministic mocks; present → real Anthropic adapters, output still span-verified by the gate) |
+| `RESEND_API_KEY`                              | Delta-alert email delivery (absent → recording mock; present → real Resend adapter)                                                      |
+| `RESEND_FROM`                                 | From-address for Resend alerts (defaults to `alerts@statutory.app`)                                                                      |
+| `GOVINFO_API_KEY`                             | GovInfo bulk data (api.data.gov key)                                                                                                     |
+| `REGULATIONS_GOV_API_KEY`                     | Regulations.gov v4 (api.data.gov key)                                                                                                    |
+| `OPENSTATES_API_KEY`                          | OpenStates v3 state-legislation sync                                                                                                     |
+| `COURTLISTENER_API_TOKEN`                     | CourtListener REST API                                                                                                                   |
+| `RESEND_API_KEY`                              | Transactional email + alert digests                                                                                                      |
+| `INNGEST_EVENT_KEY` / `INNGEST_SIGNING_KEY`   | Pipeline scheduling (prod; dev server needs none)                                                                                        |
+| `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Billing (M3 only)                                                                                                                        |
 
 Keep a committed `.env.example` with names only. Validate presence at startup; fail fast.
 

@@ -21,8 +21,16 @@ describe('createMockTriageModel', () => {
     const model = createMockTriageModel();
 
     // Act
-    const first = await model.triage({ changeEvent: EVENT, jurisdiction: 'us-federal', profiles: [] });
-    const second = await model.triage({ changeEvent: EVENT, jurisdiction: 'us-federal', profiles: [] });
+    const first = await model.triage({
+      changeEvent: EVENT,
+      jurisdiction: 'us-federal',
+      profiles: [],
+    });
+    const second = await model.triage({
+      changeEvent: EVENT,
+      jurisdiction: 'us-federal',
+      profiles: [],
+    });
 
     // Assert
     expect(first).toEqual(second);
@@ -36,7 +44,11 @@ describe('createMockTriageModel', () => {
     const offTopic = { ...EVENT, citation: '29 CFR § 825.100' };
 
     // Act
-    const result = await model.triage({ changeEvent: offTopic, jurisdiction: 'us-federal', profiles: [] });
+    const result = await model.triage({
+      changeEvent: offTopic,
+      jurisdiction: 'us-federal',
+      profiles: [],
+    });
 
     // Assert
     expect(result.topicId).toBeNull();
@@ -54,12 +66,28 @@ describe('createModelsFromEnv', () => {
     expect(models.reason).toMatch(/No ANTHROPIC_API_KEY/);
   });
 
-  test('still returns mocks (never a network client) when a key IS set', () => {
-    // Act — M1 must never call an AI API even if a key is present
-    const models = createModelsFromEnv({ ANTHROPIC_API_KEY: 'sk-test-fake' } as NodeJS.ProcessEnv);
+  test('returns Anthropic adapters when a key IS set, without any network I/O at construction', () => {
+    // Arrange — a fetch that throws if ever called proves construction is inert
+    const explodingFetch = (() => {
+      throw new Error('no network at construction');
+    }) as unknown as typeof fetch;
+    const original = globalThis.fetch;
+    globalThis.fetch = explodingFetch;
 
-    // Assert
-    expect(models.mode).toBe('mock');
-    expect(models.reason).toMatch(/post-M1/);
+    try {
+      // Act — M4: a present key selects the real adapters
+      const models = createModelsFromEnv({
+        ANTHROPIC_API_KEY: 'sk-test-fake',
+      } as NodeJS.ProcessEnv);
+
+      // Assert — adapters selected, but constructing them touched no network
+      expect(models.mode).toBe('anthropic');
+      expect(models.reason).toMatch(/span-verified/);
+      expect(models.triage.name).toMatch(/anthropic/);
+      expect(models.synthesis.name).toMatch(/anthropic/);
+      expect(models.triage.callCount).toBe(0);
+    } finally {
+      globalThis.fetch = original;
+    }
   });
 });

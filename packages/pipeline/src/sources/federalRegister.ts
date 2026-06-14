@@ -29,6 +29,15 @@ export class FederalRegisterParseError extends Error {
   }
 }
 
+/** Validate an already-parsed Federal Register document value. */
+export const validateFederalRegisterDoc = (json: unknown): FederalRegisterDoc => {
+  const result = federalRegisterDocSchema.safeParse(json);
+  if (!result.success) {
+    throw new FederalRegisterParseError(`Schema validation failed: ${result.error.message}`);
+  }
+  return result.data;
+};
+
 /** Parse and validate a Federal Register document payload. */
 export const parseFederalRegisterDoc = (payload: string): FederalRegisterDoc => {
   let json: unknown;
@@ -37,9 +46,5 @@ export const parseFederalRegisterDoc = (payload: string): FederalRegisterDoc => 
   } catch (cause) {
     throw new FederalRegisterParseError(`Invalid JSON: ${String(cause)}`);
   }
-  const result = federalRegisterDocSchema.safeParse(json);
-  if (!result.success) {
-    throw new FederalRegisterParseError(`Schema validation failed: ${result.error.message}`);
-  }
-  return result.data;
+  return validateFederalRegisterDoc(json);
 };

@@ -1,5 +1,11 @@
 import { matchProfiles, topicForCitation } from '@statutory/core';
 
+import {
+  DEFAULT_SYNTHESIS_MODEL,
+  DEFAULT_TRIAGE_MODEL,
+  createAnthropicSynthesisModel,
+  createAnthropicTriageModel,
+} from './anthropic.js';
 import type {
   ModelSet,
   SynthesisDraft,
@@ -127,13 +133,23 @@ export const withEffectiveDateOverride = (
  * env only to report intent; it is never sent anywhere.
  */
 export const createModelsFromEnv = (env: NodeJS.ProcessEnv = process.env): ModelSet => {
-  const hasKey = (env['ANTHROPIC_API_KEY'] ?? '').length > 0;
+  const apiKey = env['ANTHROPIC_API_KEY'] ?? '';
+  if (apiKey.length > 0) {
+    // Real Anthropic adapters. Construction performs NO network I/O — the
+    // first request fires only when triage()/synthesize() is invoked by the
+    // runner. Adapter output still passes through the deterministic
+    // verification gate, which the model has no authority to bypass.
+    return {
+      triage: createAnthropicTriageModel({ apiKey }),
+      synthesis: createAnthropicSynthesisModel({ apiKey }),
+      mode: 'anthropic',
+      reason: `ANTHROPIC_API_KEY set; using Anthropic adapters (triage=${DEFAULT_TRIAGE_MODEL}, synthesis=${DEFAULT_SYNTHESIS_MODEL}). Output is still span-verified by the deterministic gate.`,
+    };
+  }
   return {
     triage: createMockTriageModel(),
     synthesis: createMockSynthesisModel(),
     mode: 'mock',
-    reason: hasKey
-      ? 'ANTHROPIC_API_KEY is set, but real adapters land post-M1; using deterministic mocks.'
-      : 'No ANTHROPIC_API_KEY; using deterministic mocks.',
+    reason: 'No ANTHROPIC_API_KEY; using deterministic mocks.',
   };
 };

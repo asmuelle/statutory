@@ -1,4 +1,10 @@
-import type { ChangeEvent, Jurisdiction, PracticeProfile, SectionVersion, TopicId } from '@statutory/core';
+import type {
+  ChangeEvent,
+  Jurisdiction,
+  PracticeProfile,
+  SectionVersion,
+  TopicId,
+} from '@statutory/core';
 
 import type { FederalRegisterDoc } from '../sources/federalRegister.js';
 
@@ -60,6 +66,6 @@ export interface SynthesisModel {
 export interface ModelSet {
   readonly triage: TriageModel;
   readonly synthesis: SynthesisModel;
-  readonly mode: 'mock';
+  readonly mode: 'mock' | 'anthropic';
   readonly reason: string;
 }
