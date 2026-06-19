@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Statutory — A living rulebook for your practice</title>
+<meta name="description" content="Statutory is an UpToDate for solo professionals: a living rulebook of the exact statutes, agency rules, and rates that govern your practice — by state and specialty — with deltas pushed when something you rely on changes, plus a ready-to-send client-alert draft." />
+<meta name="theme-color" content="#16261F" />
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2316261F'/%3E%3Cpath d='M16 5 L7 9 L25 9 Z' fill='%23F5F0E6'/%3E%3Crect x='8.5' y='10' width='15' height='1.6' fill='%23F5F0E6'/%3E%3Crect x='10' y='13' width='2' height='10' fill='%23F5F0E6'/%3E%3Crect x='15' y='13' width='2' height='10' fill='%23F5F0E6'/%3E%3Crect x='20' y='13' width='2' height='10' fill='%23F5F0E6'/%3E%3Crect x='8.5' y='24' width='15' height='2' fill='%23C9A24B'/%3E%3C/svg%3E" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Statutory — A living rulebook for your practice" />
+<meta property="og:description" content="The exact statutes, agency rules, and rates that govern your practice — by state and specialty — kept current, with deltas, effective dates, and a ready-to-send client-alert draft." />
+<meta property="og:site_name" content="Statutory" />
+<meta property="og:image" content="og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="og.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    /* Marble & green — institutional / legislative */
+    --ivory:        #F5F0E6;   /* warm stone page */
+    --ivory-deep:   #ECE4D4;   /* deeper marble band */
+    --ivory-card:   #FBF8F1;   /* raised paper surface */
+    --vein:         rgba(27, 58, 47, 0.06);
+
+    --green:        #1B3A2F;   /* bottle / forest authority */
+    --green-deep:   #122A21;
+    --green-ink:    #16261F;   /* primary text */
+    --green-soft:   rgba(27, 58, 47, 0.08);
+
+    --brass:        #A8842F;   /* restrained gilt accent */
+    --brass-bright: #C9A24B;
+    --brass-soft:   rgba(168, 132, 47, 0.12);
+
+    --slate:        #5B5141;   /* muted body ink */
+    --slate-faint:  #8A8270;
+    --hairline:     rgba(27, 58, 47, 0.16);
+    --hairline-2:   rgba(27, 58, 47, 0.28);
+
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --sans:  "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono:  ui-monospace, "SFMono-Regular", "JetBrains Mono", "Courier New", monospace;
+
+    --text-eyebrow: 0.74rem;
+    --text-body:    clamp(1rem, 0.96rem + 0.25vw, 1.1rem);
+    --text-lead:    clamp(1.15rem, 1.02rem + 0.6vw, 1.45rem);
+    --text-h2:      clamp(1.9rem, 1.3rem + 2.6vw, 3.05rem);
+    --text-h3:      clamp(1.3rem, 1.1rem + 0.9vw, 1.6rem);
+    --text-hero:    clamp(2.6rem, 1.2rem + 6.2vw, 5.6rem);
+
+    --space-section: clamp(4.5rem, 3rem + 6vw, 9rem);
+    --maxw: 1140px;
+
+    --radius: 14px;
+    --radius-lg: 20px;
+
+    --dur: 600ms;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    color: var(--green-ink);
+    background:
+      radial-gradient(120% 70% at 85% -8%, rgba(168,132,47,0.07), transparent 55%),
+      linear-gradient(180deg, var(--ivory) 0%, var(--ivory) 60%, var(--ivory-deep) 100%);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.07; margin: 0; letter-spacing: -0.012em; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: clamp(1.2rem, 5vw, 2.5rem); }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: var(--text-eyebrow);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    display: inline-flex; align-items: center; gap: 0.7em;
+  }
+  .eyebrow::before { content: ""; width: 1.7em; height: 2px; background: var(--brass-bright); }
+
+  .lead { font-size: var(--text-lead); color: var(--slate); line-height: 1.55; }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.6em;
+    font-family: var(--sans); font-weight: 600; font-size: 0.98rem;
+    padding: 0.85em 1.5em; border-radius: 10px;
+    border: 1px solid transparent; cursor: pointer;
+    transition: transform var(--dur) var(--ease), background-color 200ms ease, box-shadow 200ms ease, border-color 200ms ease, color 200ms ease;
+    will-change: transform;
+  }
+  .btn-primary {
+    background: var(--green); color: var(--ivory);
+    box-shadow: 0 10px 26px rgba(18,42,33,0.22), inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .btn-primary:hover { transform: translateY(-2px); background: var(--green-deep); box-shadow: 0 16px 36px rgba(18,42,33,0.30); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-ghost { background: transparent; color: var(--green-ink); border-color: var(--hairline-2); }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--brass); color: var(--green); background: var(--brass-soft); }
+  .btn-ghost:active { transform: translateY(0); }
+
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--brass); outline-offset: 3px; border-radius: 6px;
+  }
+
+  /* App store badge */
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.75em;
+    padding: 0.7em 1.3em; border-radius: 12px;
+    border: 1px solid var(--hairline-2); background: var(--ivory-card);
+    color: var(--green-ink);
+    transition: transform var(--dur) var(--ease), border-color 200ms ease, box-shadow 200ms ease;
+  }
+  .badge:hover { transform: translateY(-2px); border-color: var(--brass); box-shadow: 0 12px 28px rgba(18,42,33,0.10); }
+  .badge small { display: block; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--slate-faint); }
+  .badge strong { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.05rem; }
+
+  /* ---------- Header ---------- */
+  header.site {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px);
+    background: linear-gradient(180deg, rgba(245,240,230,0.92), rgba(245,240,230,0.66));
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding-block: 0.95rem; }
+  .brand { display: inline-flex; align-items: center; gap: 0.65em; font-family: var(--serif); font-size: 1.4rem; font-weight: 600; letter-spacing: -0.01em; }
+  .brand .mark { width: 30px; height: 30px; flex: none; }
+  .nav-links { display: flex; gap: 1.7rem; align-items: center; }
+  .nav-links a { font-size: 0.92rem; color: var(--slate); transition: color 180ms ease; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta { font-weight: 600; color: var(--green) !important; }
+  @media (max-width: 760px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+  /* ---------- Hero ---------- */
+  .hero { position: relative; padding-top: clamp(3rem, 2rem + 4vw, 5.5rem); padding-bottom: var(--space-section); overflow: hidden; }
+  .veins { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+  .hero-grid {
+    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(2rem, 4vw, 4rem); align-items: center;
+  }
+  @media (max-width: 920px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  h1 { font-size: var(--text-hero); font-weight: 500; margin-bottom: 1.1rem; }
+  h1 em { font-style: italic; color: var(--brass); }
+  .hero p.lead { max-width: 40ch; margin-bottom: 2rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; margin-bottom: 2.1rem; }
+
+  .proof {
+    display: inline-flex; align-items: center; gap: 0.85em;
+    padding: 0.7em 1.1em; border-radius: 12px;
+    background: var(--green-soft); border: 1px solid var(--hairline);
+    max-width: 100%;
+  }
+  .proof svg { flex: none; }
+  .proof span { font-size: 0.9rem; color: var(--green-ink); line-height: 1.4; }
+  .proof b { color: var(--green); font-weight: 600; }
+
+  /* ---------- Signature dossier visual ---------- */
+  .hero-visual { position: relative; }
+  .dossier {
+    position: relative;
+    background: var(--ivory-card);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 30px 70px rgba(18,42,33,0.16), 0 2px 0 rgba(255,255,255,0.6) inset;
+    overflow: hidden;
+  }
+  .dossier::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px;
+    background: linear-gradient(90deg, var(--brass), var(--brass-bright), var(--brass));
+  }
+  .dossier-head { padding: 1.4rem 1.5rem 1rem; border-bottom: 1px solid var(--hairline); }
+  .dossier-head .row { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  .dossier-head .cite { font-family: var(--mono); font-size: 0.82rem; color: var(--green); letter-spacing: 0.01em; }
+  .dossier-head .ses { font-family: var(--mono); font-size: 0.7rem; color: var(--slate-faint); letter-spacing: 0.08em; text-transform: uppercase; }
+  .dossier-head h3 { font-size: 1.35rem; margin-top: 0.55rem; }
+
+  /* lifecycle timeline */
+  .lifecycle { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding: 1.3rem 1.5rem 0.4rem; position: relative; }
+  .lifecycle::before {
+    content: ""; position: absolute; left: calc(12.5% ); right: calc(12.5%); top: 1.85rem; height: 2px;
+    background: linear-gradient(90deg, var(--brass-bright) 0%, var(--brass-bright) 66%, var(--hairline-2) 66%, var(--hairline-2) 100%);
+  }
+  .stage { position: relative; text-align: center; z-index: 1; }
+  .stage .dot {
+    width: 14px; height: 14px; border-radius: 50%; margin: 0 auto 0.6rem;
+    background: var(--ivory-card); border: 2px solid var(--brass);
+  }
+  .stage.done .dot { background: var(--brass-bright); border-color: var(--brass-bright); }
+  .stage.now .dot { background: var(--green); border-color: var(--green); box-shadow: 0 0 0 4px var(--green-soft); }
+  .stage.future .dot { border-color: var(--hairline-2); }
+  .stage .lbl { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--slate); display: block; }
+  .stage .date { font-size: 0.68rem; color: var(--slate-faint); display: block; margin-top: 0.15rem; }
+  .stage.now .lbl { color: var(--green); font-weight: 600; }
+
+  .delta {
+    margin: 1.1rem 1.5rem 1.5rem; padding: 1rem 1.1rem;
+    background: var(--ivory); border: 1px solid var(--hairline); border-left: 3px solid var(--brass);
+    border-radius: 10px;
+  }
+  .delta .flag {
+    display: inline-flex; align-items: center; gap: 0.4em;
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--green); background: var(--brass-soft); padding: 0.25em 0.6em; border-radius: 999px; margin-bottom: 0.6rem;
+  }
+  .delta p { font-size: 0.92rem; color: var(--green-ink); line-height: 1.55; }
+  .delta .old { text-decoration: line-through; color: var(--slate-faint); }
+  .delta .new { color: var(--green); font-weight: 600; }
+  .delta .meta { margin-top: 0.7rem; font-family: var(--mono); font-size: 0.72rem; color: var(--slate); display: flex; flex-wrap: wrap; gap: 0.4rem 1rem; }
+  .delta .draft { margin-top: 0.85rem; display: inline-flex; align-items: center; gap: 0.5em; font-size: 0.82rem; font-weight: 600; color: var(--green); }
+
+  /* ---------- Generic section ---------- */
+  section { position: relative; }
+  .section-pad { padding-block: var(--space-section); }
+  .section-head { max-width: 58ch; margin-bottom: clamp(2.5rem, 4vw, 4rem); }
+  .section-head h2 { font-size: var(--text-h2); margin-block: 0.6rem 1rem; }
+  .section-head p { color: var(--slate); }
+
+  .divider-seal { display: flex; justify-content: center; align-items: center; gap: 1rem; padding-block: 0.5rem; }
+  .divider-seal .rule { height: 1px; width: clamp(40px, 14vw, 110px); background: var(--hairline-2); }
+
+  /* ---------- Promise band ---------- */
+  .promise {
+    background:
+      radial-gradient(70% 120% at 0% 0%, rgba(168,132,47,0.07), transparent 60%),
+      var(--ivory-deep);
+    border-block: 1px solid var(--hairline);
+  }
+  .promise-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  @media (max-width: 880px) { .promise-grid { grid-template-columns: 1fr; } }
+  .promise blockquote {
+    margin: 0; font-family: var(--serif); font-style: italic;
+    font-size: clamp(1.6rem, 1.1rem + 2.4vw, 2.5rem); line-height: 1.22; color: var(--green-ink);
+  }
+  .promise blockquote .hl { color: var(--brass); font-style: normal; }
+  .promise-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.3rem; }
+  .promise-list li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; }
+  .promise-list .ico {
+    width: 42px; height: 42px; flex: none; border-radius: 11px; display: grid; place-items: center;
+    background: var(--green); border: 1px solid var(--green-deep);
+  }
+  .promise-list h3 { font-family: var(--sans); font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .promise-list p { color: var(--slate); font-size: 0.95rem; }
+
+  /* ---------- Features (bento) ---------- */
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.2rem; }
+  .card {
+    position: relative; background: var(--ivory-card);
+    border: 1px solid var(--hairline); border-radius: var(--radius-lg);
+    padding: clamp(1.5rem, 2.5vw, 2.1rem);
+    transition: transform var(--dur) var(--ease), border-color 250ms ease, box-shadow 250ms ease;
+    overflow: hidden;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--hairline-2); box-shadow: 0 24px 50px rgba(18,42,33,0.12); }
+  .card .kicker { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); font-weight: 500; }
+  .card h3 { font-size: var(--text-h3); margin-block: 0.7rem 0.6rem; }
+  .card p { color: var(--slate); font-size: 0.96rem; }
+  .card .visual { margin-top: 1.4rem; }
+
+  .col-3 { grid-column: span 3; }
+  .col-2 { grid-column: span 2; }
+  .col-4 { grid-column: span 4; }
+  .col-6 { grid-column: span 6; }
+  @media (max-width: 900px) { .col-3, .col-2, .col-4 { grid-column: span 3; } .bento { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 640px) { .bento { grid-template-columns: 1fr; } .col-3, .col-2, .col-4, .col-6 { grid-column: 1 / -1; } }
+
+  .card.dark { background: var(--green); border-color: var(--green-deep); color: var(--ivory); }
+  .card.dark h3 { color: var(--ivory); }
+  .card.dark p { color: rgba(245,240,230,0.78); }
+  .card.dark .kicker { color: var(--brass-bright); }
+
+  /* citation chip list */
+  .cites { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.3rem; }
+  .cchip { font-family: var(--mono); font-size: 0.74rem; padding: 0.32em 0.7em; border-radius: 8px; border: 1px solid var(--hairline-2); color: var(--slate); background: var(--ivory); }
+  .cchip.on { color: var(--ivory); background: var(--green); border-color: var(--green); }
+  .card.dark .cchip { color: rgba(245,240,230,0.85); background: rgba(245,240,230,0.07); border-color: rgba(245,240,230,0.18); }
+
+  /* source feed rows */
+  .feeds { display: grid; gap: 0.55rem; margin-top: 1.3rem; }
+  .feed { display: grid; grid-template-columns: auto 1fr auto; gap: 0.7rem; align-items: center; font-size: 0.85rem; }
+  .feed .src { font-family: var(--mono); font-size: 0.74rem; color: var(--green); }
+  .feed .bar { height: 6px; border-radius: 999px; background: var(--green-soft); overflow: hidden; position: relative; }
+  .feed .bar i { position: absolute; inset: 0 auto 0 0; background: var(--brass-bright); border-radius: 999px; }
+  .feed .st { font-family: var(--mono); font-size: 0.68rem; color: var(--slate-faint); letter-spacing: 0.04em; }
+
+  /* ---------- How it works ---------- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+  @media (max-width: 820px) { .steps { grid-template-columns: 1fr; } }
+  .step { padding-top: 1.3rem; border-top: 2px solid var(--green); }
+  .step .num { font-family: var(--serif); font-size: 2.6rem; color: var(--brass); line-height: 1; }
+  .step h3 { font-family: var(--sans); font-size: 1.1rem; font-weight: 600; margin-block: 0.55rem 0.5rem; }
+  .step p { color: var(--slate); font-size: 0.95rem; }
+
+  /* ---------- Pricing ---------- */
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; align-items: stretch; }
+  @media (max-width: 880px) { .price-grid { grid-template-columns: 1fr; } }
+  .plan {
+    border: 1px solid var(--hairline); border-radius: var(--radius-lg);
+    padding: 2rem clamp(1.6rem, 2.5vw, 2.1rem); background: var(--ivory-card);
+    display: flex; flex-direction: column;
+  }
+  .plan.feature { border-color: var(--brass); background: var(--green); color: var(--ivory); box-shadow: 0 28px 64px rgba(18,42,33,0.28); }
+  .plan .tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; color: var(--brass); }
+  .plan.feature .tag { color: var(--brass-bright); }
+  .plan h3 { font-family: var(--serif); font-size: 1.5rem; margin-block: 0.6rem 0.3rem; }
+  .plan.feature h3 { color: var(--ivory); }
+  .plan .amt { font-family: var(--serif); font-size: 2.5rem; margin-block: 0.8rem 0.2rem; }
+  .plan .amt span { font-family: var(--sans); font-size: 0.9rem; color: var(--slate-faint); font-weight: 400; }
+  .plan.feature .amt span { color: rgba(245,240,230,0.65); }
+  .plan .sub { color: var(--slate); font-size: 0.92rem; min-height: 2.6em; }
+  .plan.feature .sub { color: rgba(245,240,230,0.78); }
+  .plan ul { list-style: none; margin: 1.3rem 0 1.8rem; padding: 0; display: grid; gap: 0.75rem; }
+  .plan li { display: grid; grid-template-columns: auto 1fr; gap: 0.7rem; font-size: 0.93rem; color: var(--green-ink); }
+  .plan.feature li { color: rgba(245,240,230,0.95); }
+  .plan li svg { margin-top: 0.25em; flex: none; }
+  .plan .foot { margin-top: auto; }
+  .plan.feature .btn-primary { background: var(--brass-bright); color: var(--green-deep); box-shadow: 0 10px 24px rgba(201,162,75,0.3); }
+  .plan.feature .btn-primary:hover { background: #d6b463; }
+  .price-note { text-align: center; margin-top: 1.8rem; color: var(--slate-faint); font-size: 0.88rem; }
+
+  /* ---------- FAQ ---------- */
+  .faq { display: grid; gap: 0.9rem; max-width: 840px; }
+  details {
+    border: 1px solid var(--hairline); border-radius: var(--radius);
+    background: var(--ivory-card); padding: 0.4rem 1.4rem;
+    transition: border-color 200ms ease;
+  }
+  details[open] { border-color: var(--hairline-2); }
+  summary {
+    cursor: pointer; list-style: none; padding-block: 1.1rem;
+    font-family: var(--serif); font-size: 1.15rem; font-weight: 500;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary .plus { flex: none; width: 22px; height: 22px; position: relative; transition: transform 300ms var(--ease); }
+  summary .plus::before, summary .plus::after { content: ""; position: absolute; background: var(--brass); border-radius: 2px; }
+  summary .plus::before { top: 10px; left: 2px; right: 2px; height: 2px; }
+  summary .plus::after { left: 10px; top: 2px; bottom: 2px; width: 2px; }
+  details[open] summary .plus { transform: rotate(135deg); }
+  details p { color: var(--slate); padding-bottom: 1.2rem; font-size: 0.98rem; }
+  details p + p { padding-top: 0; margin-top: -0.5rem; }
+
+  /* ---------- Final CTA ---------- */
+  .final { text-align: center; }
+  .final-card {
+    position: relative; overflow: hidden;
+    border: 1px solid var(--green-deep); border-radius: var(--radius-lg);
+    padding: clamp(2.5rem, 5vw, 4.5rem) 1.5rem; color: var(--ivory);
+    background:
+      radial-gradient(90% 130% at 50% 0%, rgba(201,162,75,0.16), transparent 60%),
+      var(--green);
+  }
+  .final-card::before {
+    content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--brass), var(--brass-bright), var(--brass));
+  }
+  .final-card .eyebrow { color: var(--brass-bright); }
+  .final-card .eyebrow::before { background: var(--brass-bright); }
+  .final-card h2 { font-size: var(--text-h2); margin-bottom: 1rem; color: var(--ivory); }
+  .final-card p { color: rgba(245,240,230,0.82); max-width: 50ch; margin: 0 auto 2rem; }
+  .final-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .final-card .badge { background: rgba(245,240,230,0.06); border-color: rgba(245,240,230,0.25); color: var(--ivory); }
+  .final-card .badge small { color: rgba(245,240,230,0.6); }
+  .final-card .badge:hover { border-color: var(--brass-bright); }
+
+  /* ---------- Footer ---------- */
+  footer.site { border-top: 1px solid var(--hairline); padding-block: 3rem 2.5rem; color: var(--slate-faint); background: var(--ivory-deep); }
+  .foot-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; }
+  .foot-brand { display: flex; align-items: center; gap: 0.6em; font-family: var(--serif); font-size: 1.2rem; color: var(--green-ink); font-weight: 600; }
+  .foot-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .foot-links a { font-size: 0.9rem; color: var(--slate); transition: color 180ms ease; }
+  .foot-links a:hover { color: var(--green); }
+  .disclaimer { font-size: 0.82rem; line-height: 1.6; max-width: 78ch; color: var(--slate); border-top: 1px solid var(--hairline); padding-top: 1.5rem; }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease), transform 700ms var(--ease); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none; }
+    .btn, .card, .badge, .proof, .plan { transition: none; }
+  }
+
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+</style>
+<script data-goatcounter="https://asmuelle.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<a href="#main" class="visually-hidden">Skip to content</a>
+
+<!-- ===== Header ===== -->
+<header class="site">
+  <div class="wrap nav">
+    <a class="brand" href="#top" aria-label="Statutory home">
+      <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="7" fill="#16261F"/>
+        <path d="M16 5 L7 9 L25 9 Z" fill="#F5F0E6"/>
+        <rect x="8.5" y="10" width="15" height="1.6" fill="#F5F0E6"/>
+        <rect x="10" y="13" width="2" height="10" fill="#F5F0E6"/>
+        <rect x="15" y="13" width="2" height="10" fill="#F5F0E6"/>
+        <rect x="20" y="13" width="2" height="10" fill="#F5F0E6"/>
+        <rect x="8.5" y="24" width="15" height="2" fill="#C9A24B"/>
+      </svg>
+      Statutory
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#get" class="nav-cta">Join the waitlist</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <span id="top"></span>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <svg class="veins" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g stroke="#1B3A2F" stroke-opacity="0.05" fill="none" stroke-width="2">
+        <path d="M-20 120 C 180 90, 320 230, 540 170 S 980 70, 1240 180"/>
+        <path d="M-20 470 C 220 540, 460 410, 700 480 S 1020 560, 1240 470"/>
+        <path d="M0 320 C 200 300, 380 370, 600 320 S 1000 260, 1200 330"/>
+      </g>
+    </svg>
+
+    <div class="wrap hero-grid">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">Living rulebook · By state &amp; specialty</p>
+        <h1 id="hero-heading">The rules that govern your practice, kept <em>current</em>.</h1>
+        <p class="lead">Statutory assembles a living rulebook of the exact statutes, agency rules, and rates for your jurisdictions — then pushes a precise delta the moment something you rely on changes, with a client-alert draft you can bill.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#get">Join the waitlist</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+
+        <div class="proof" role="note">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3 L4 6v5c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-3z" stroke="#A8842F" stroke-width="1.6" fill="none"/>
+            <path d="M9 12l2 2 4-4.5" stroke="#1B3A2F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span><b>Every change cites the primary source.</b> The exact section, the effective date, span-verified against the register — never a paraphrase.</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <!-- SIGNATURE: living statute dossier with bill-lifecycle timeline -->
+        <article class="dossier" role="img" aria-label="A statute dossier card. A rule moves through the stages introduced, amended, and enacted, and is now in force as of July 1, 2026. The delta notes that the federal exempt-salary threshold rose from $43,888 to $58,656, citing 29 C.F.R. § 541.600, affecting three sections of your rulebook, with a client-alert draft ready.">
+          <div class="dossier-head">
+            <div class="row">
+              <span class="cite">29 C.F.R. § 541.600</span>
+              <span class="ses">119th · Rule</span>
+            </div>
+            <h3>FLSA exempt-salary threshold</h3>
+          </div>
+
+          <div class="lifecycle" aria-hidden="true">
+            <div class="stage done"><span class="dot"></span><span class="lbl">Introduced</span><span class="date">Mar 2025</span></div>
+            <div class="stage done"><span class="dot"></span><span class="lbl">Amended</span><span class="date">Sep 2025</span></div>
+            <div class="stage now"><span class="dot"></span><span class="lbl">Enacted</span><span class="date">Apr 2026</span></div>
+            <div class="stage future"><span class="dot"></span><span class="lbl">In force</span><span class="date">Jul 1 2026</span></div>
+          </div>
+
+          <div class="delta" aria-hidden="true">
+            <span class="flag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 21V4l9 3-3 4 7 3-13 7z" fill="#A8842F"/></svg>
+              Affects you · 3 sections
+            </span>
+            <p>Effective <strong>July 1, 2026</strong>, the exempt-salary threshold rises from <span class="old">$43,888</span> to <span class="new">$58,656</span> per year. Employees below the new floor are no longer exempt from overtime.</p>
+            <div class="meta">
+              <span>SRC eCFR · GovInfo</span>
+              <span>VERIFIED ✓ span-match</span>
+            </div>
+            <span class="draft">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="#1B3A2F" stroke-width="1.6"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#1B3A2F" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Client-alert draft ready · export .docx
+            </span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Promise band ===== -->
+  <section id="promise" class="promise section-pad" aria-labelledby="promise-heading">
+    <div class="wrap promise-grid">
+      <div class="reveal">
+        <p class="eyebrow">The promise</p>
+        <h2 id="promise-heading" class="visually-hidden">Why Statutory</h2>
+        <blockquote>One missed regulatory change is a <span class="hl">malpractice event.</span> Statutory makes sure you never read about it second.</blockquote>
+        <p class="lead" style="margin-top:1.5rem; max-width:44ch;">You already pay for currency — CLE, Westlaw, a research seat. What you can't buy off the shelf is a digest scoped to your exact practice, pushed when it matters, in language you can hand a client.</p>
+      </div>
+      <ul class="promise-list reveal">
+        <li>
+          <span class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" stroke="#C9A24B" stroke-width="1.8" stroke-linecap="round"/><circle cx="18" cy="18" r="3" stroke="#C9A24B" stroke-width="1.6"/></svg>
+          </span>
+          <div><h3>Scoped to your practice</h3><p>Your jurisdictions, your practice areas, your client types — the firehose filtered down to the sections you actually rely on.</p></div>
+        </li>
+        <li>
+          <span class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="8.5" stroke="#C9A24B" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="#C9A24B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <div><h3>Effective dates, tracked</h3><p>Every section is versioned with its effective-date history and the exact citation — so you know what changed, and precisely when it takes hold.</p></div>
+        </li>
+        <li>
+          <span class="ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 3h9l3 3v15H6z" stroke="#C9A24B" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 11h6M9 15h4" stroke="#C9A24B" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <div><h3>Output you can bill</h3><p>Each delta arrives with a ready-to-send client-alert draft — the artifact that turns a subscription into billable client communication.</p></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Features (bento) ===== -->
+  <section id="features" class="section-pad" aria-labelledby="features-heading">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">What Statutory does</p>
+        <h2 id="features-heading">A reference desk that watches the registers so you don't have to.</h2>
+        <p>Primary government feeds, monitored daily, mapped to your rulebook and synthesized into deltas you can act on — with a citation behind every line.</p>
+      </div>
+
+      <div class="bento">
+        <article class="card col-3 reveal">
+          <span class="kicker">Living rulebook</span>
+          <h3>Your rules, in one place</h3>
+          <p>Onboarding builds a practice profile, then assembles a "your rules" wiki — each section a topic pinned to its primary source, versioned with effective-date history.</p>
+          <div class="visual cites">
+            <span class="cchip on">CA meal-break rules</span><span class="cchip">IRS reasonable comp</span><span class="cchip on">FLSA overtime</span>
+          </div>
+        </article>
+
+        <article class="card col-3 reveal">
+          <span class="kicker">Delta engine</span>
+          <h3>Changes, pushed — not searched</h3>
+          <p>Daily diff monitoring of statute and register feeds. When a section you rely on moves, you get the delta with effective dates and the affected parts of your rulebook flagged.</p>
+          <div class="visual cites">
+            <span class="cchip on">▲ threshold ↑ $58,656</span><span class="cchip">eff. 2026-07-01</span>
+          </div>
+        </article>
+
+        <article class="card col-4 reveal dark">
+          <span class="kicker">Span-verified citations</span>
+          <h3>Cite the exact section, or don't ship it</h3>
+          <p>Every quoted span must string-match the retrieved source text; effective dates are extracted and cross-checked. Anything that fails verification is blocked and routed to a human reviewer — because in this market, one mutated citation is a product-killing event.</p>
+          <div class="visual cites">
+            <span class="cchip">29 C.F.R. § 541.600</span><span class="cchip">26 U.S.C. § 162</span><span class="cchip">Cal. Lab. Code § 226.7</span>
+          </div>
+        </article>
+
+        <article class="card col-2 reveal">
+          <span class="kicker">Primary sources</span>
+          <h3>Open government feeds</h3>
+          <p>Federal Register, eCFR, GovInfo, CourtListener, state registers and agency RSS — crawl-friendly and free of the publisher paywalls.</p>
+          <div class="visual feeds" aria-hidden="true">
+            <div class="feed"><span class="src">eCFR</span><span class="bar"><i style="width:100%"></i></span><span class="st">live</span></div>
+            <div class="feed"><span class="src">Fed. Reg.</span><span class="bar"><i style="width:100%"></i></span><span class="st">live</span></div>
+            <div class="feed"><span class="src">State reg.</span><span class="bar"><i style="width:64%"></i></span><span class="st">12 st.</span></div>
+          </div>
+        </article>
+
+        <article class="card col-6 reveal">
+          <span class="kicker">Billable artifact</span>
+          <h3>From "a rule changed" to a client alert in your inbox</h3>
+          <p>Each delta arrives by email and Slack with a drafted client alert — plain-language summary, the citation, the effective date, and what it means for the people you advise. Export to Word or PDF, edit, send, bill. The subscription pays for itself the first time you do.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-seal" aria-hidden="true">
+    <span class="rule"></span>
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+      <circle cx="17" cy="17" r="14" stroke="#A8842F" stroke-width="1.4"/>
+      <path d="M17 7 L9 10.5 L25 10.5 Z" fill="#A8842F"/>
+      <rect x="11" y="11.5" width="12" height="1.4" fill="#A8842F"/>
+      <rect x="12.5" y="14" width="1.6" height="8" fill="#A8842F"/>
+      <rect x="16.2" y="14" width="1.6" height="8" fill="#A8842F"/>
+      <rect x="19.9" y="14" width="1.6" height="8" fill="#A8842F"/>
+      <rect x="11" y="23" width="12" height="1.6" fill="#A8842F"/>
+    </svg>
+    <span class="rule"></span>
+  </div>
+
+  <!-- ===== How it works ===== -->
+  <section id="how" class="section-pad" aria-labelledby="how-heading">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-heading">Three steps to a rulebook that maintains itself.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal">
+          <div class="num">01</div>
+          <h3>Build your profile</h3>
+          <p>Tell Statutory your jurisdictions, practice areas, and client types. It assembles your living rulebook, each section pinned to its primary source.</p>
+        </div>
+        <div class="step reveal">
+          <div class="num">02</div>
+          <h3>We watch the feeds</h3>
+          <p>Daily diffs of statute and register feeds. A change is mapped to the exact sections it affects, then synthesized into a delta with effective dates.</p>
+        </div>
+        <div class="step reveal">
+          <div class="num">03</div>
+          <h3>You get the delta</h3>
+          <p>An alert lands in your inbox and Slack — citation, effective date, affected sections, and a client-alert draft ready to export, edit, and send.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Pricing ===== -->
+  <section id="pricing" class="promise section-pad" aria-labelledby="pricing-heading">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Pricing</p>
+        <h2 id="pricing-heading">One billable client alert pays for the year.</h2>
+        <p>Priced for the individual professional who already pays out of pocket for currency — a fraction of a single-state research seat. Annual billing is the default.</p>
+      </div>
+
+      <div class="price-grid">
+        <div class="plan reveal">
+          <span class="tag">Entry wedge</span>
+          <h3>Core</h3>
+          <div class="amt">$49<span> / mo</span></div>
+          <p class="sub">One jurisdiction bundle, unlimited client-alert drafts. Billed annually at $468.</p>
+          <ul>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Living rulebook for one jurisdiction bundle</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Daily delta alerts by email &amp; Slack</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Unlimited client-alert drafts</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Span-verified citations &amp; effective dates</li>
+          </ul>
+          <div class="foot"><a class="btn btn-ghost" href="#get" style="width:100%; justify-content:center;">Join the waitlist</a></div>
+        </div>
+
+        <div class="plan feature reveal">
+          <span class="tag">Most popular · the margin tier</span>
+          <h3>Practice Pro</h3>
+          <div class="amt">$99<span> / mo</span></div>
+          <p class="sub">Multi-specialty coverage and white-labeled client alerts — still less than half of a Westlaw Classic seat.</p>
+          <ul>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#C9A24B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Core</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#C9A24B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Multi-specialty coverage</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#C9A24B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Effective-date history exports</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#C9A24B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>White-labeled client alerts</li>
+          </ul>
+          <div class="foot"><a class="btn btn-primary" href="#get" style="width:100%; justify-content:center;">Join the waitlist</a></div>
+        </div>
+
+        <div class="plan reveal">
+          <span class="tag">Small firm</span>
+          <h3>Small Firm</h3>
+          <div class="amt">$149<span> / mo</span></div>
+          <p class="sub">Three seats on a shared rulebook for the practice. Add jurisdictions as you grow.</p>
+          <ul>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>3 seats, one shared rulebook</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Everything in Practice Pro</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Additional jurisdictions from $15–19/mo each</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 13l4 4L19 7" stroke="#A8842F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Shared effective-date history</li>
+          </ul>
+          <div class="foot"><a class="btn btn-ghost" href="#get" style="width:100%; justify-content:center;">Join the waitlist</a></div>
+        </div>
+      </div>
+      <p class="price-note">Prices shown for reference ahead of launch. Statutory is pre-launch; final tiers and coverage may change.</p>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" class="section-pad" aria-labelledby="faq-heading">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Questions</p>
+        <h2 id="faq-heading">Coverage, accuracy, and the line we won't cross.</h2>
+      </div>
+      <div class="faq reveal">
+        <details open>
+          <summary>Which jurisdictions and specialties do you cover?<span class="plus" aria-hidden="true"></span></summary>
+          <p>At launch, Statutory covers federal sources plus a focused set of states — federal feeds (Federal Register, eCFR, GovInfo, CourtListener) are open and reliable, while roughly half of state registers are weekly PDF bulletins that take real work to parse. We are honest about this: we would rather cover federal and a dozen states deeply than claim all fifty and quietly under-deliver. The waitlist lets you tell us your jurisdictions and specialties so we prioritize the ones our first users actually need.</p>
+        </details>
+        <details>
+          <summary>How accurate are the citations — and can you guarantee you won't miss a change?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Every quoted span is string-matched against the retrieved primary source, and effective dates are extracted and cross-checked; anything that fails verification is blocked from publishing and routed to a human reviewer. That makes the citations we ship trustworthy. What no monitoring tool can promise is perfect completeness — local ordinances, sub-regulatory guidance, and case law reinterpreting a statute can fall outside any feed. Statutory is a powerful first line of defense, not a guarantee that nothing was missed. Treat it as a tool that sharpens your judgment, not a replacement for it.</p>
+        </details>
+        <details>
+          <summary>Is this legal, tax, or compliance advice?<span class="plus" aria-hidden="true"></span></summary>
+          <p>No. Statutory is a research and monitoring tool that surfaces primary sources and drafts. It is not legal, tax, accounting, or compliance advice, and the client-alert drafts are starting points for a licensed professional to review, edit, and stand behind. You remain responsible for verifying every citation and exercising your own professional judgment before relying on or sending anything.</p>
+        </details>
+        <details>
+          <summary>How is this different from Westlaw, ChatGPT, or a free agency newsletter?<span class="plus" aria-hidden="true"></span></summary>
+          <p>Westlaw and Lexis are pull-based search — you have to go ask. Free agency newsletters are an unscoped firehose. Generic chatbots can't guarantee statute-level citation fidelity or effective-date tracking, and you can't bill on unverifiable output. Statutory is the missing middle: a personalized living digest scoped to your practice, with verified citations and a billable artifact attached to each change.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Final CTA ===== -->
+  <section id="get" class="section-pad final" aria-labelledby="get-heading">
+    <div class="wrap">
+      <div class="final-card reveal">
+        <p class="eyebrow" style="justify-content:center;">Statutory · Coming soon</p>
+        <h2 id="get-heading">Stop reading the register. Let it come to you.</h2>
+        <p>Join the waitlist and tell us your jurisdictions and specialties. We're building coverage around the practices our first users need most — and you'll be first in line when yours is ready.</p>
+        <div class="final-actions">
+          <a class="btn btn-primary" href="#" aria-label="Join the waitlist (coming soon)">Join the waitlist</a>
+          <a class="badge" href="#" aria-label="Coming soon to the web">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="#C9A24B" stroke-width="1.6"/><path d="M3.5 12h17M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" stroke="#C9A24B" stroke-width="1.3"/></svg>
+            <span><small>Launching first on the</small><strong>Web</strong></span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="7" fill="#16261F"/>
+          <path d="M16 5 L7 9 L25 9 Z" fill="#F5F0E6"/>
+          <rect x="10" y="13" width="2" height="10" fill="#F5F0E6"/>
+          <rect x="15" y="13" width="2" height="10" fill="#F5F0E6"/>
+          <rect x="20" y="13" width="2" height="10" fill="#F5F0E6"/>
+          <rect x="8.5" y="24" width="15" height="2" fill="#C9A24B"/>
+        </svg>
+        Statutory
+      </div>
+      <nav class="foot-links" aria-label="Footer">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+        <a href="#get">Join the waitlist</a>
+      </nav>
+    </div>
+    <p class="disclaimer">
+      Statutory is a regulatory research and monitoring tool for licensed professionals. It is <strong>not legal, tax, accounting, or compliance advice</strong>, not a substitute for your own professional judgment, and not a guarantee of complete coverage of every applicable change. Citations are span-verified against primary sources, but you remain responsible for confirming every citation and effective date before relying on or sending any output, including client-alert drafts. Statutory is pre-launch; described coverage, features, and pricing are planned and subject to change.
+      <br /><br />
+      © 2026 Statutory. A living rulebook for solo and small-firm professionals.
+    </p>
+  </div>
+</footer>
+
+<script>
+  // Scroll-reveal, gated on reduced-motion. No external deps.
+  (function () {
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var els = document.querySelectorAll('.reveal');
+    if (prefersReduced || !('IntersectionObserver' in window)) {
+      els.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+</body>
+</html>
