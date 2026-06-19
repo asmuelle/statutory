@@ -2,18 +2,7 @@
 
 > An UpToDate for solo professionals: a living rulebook of the exact statutes, agency rules, and rates that govern your practice — by state and specialty — with deltas pushed when something you rely on changes, plus a ready-to-send client-alert draft that turns the subscription into billable output.
 
-**Category:** LLM wiki / auto-research (living documents + delta alerts, à la Karpathy) · **Status:** ✅ Tier 1 — survived the platform-risk attack (defensible)
-
-## Scorecard
-
-| Metric | Score |
-|---|---|
-| Rank (of 12 finalists) | #3 |
-| Combined score | 5.6 |
-| Monetization potential (1-10) | 7 |
-| Feasibility (1-10) | 6 |
-| Defensible vs platform features | Yes |
-| Skeptic verdict | weakened |
+**Category:** LLM wiki / auto-research (living documents + delta alerts, à la Karpathy) · 
 
 ## Concept
 
