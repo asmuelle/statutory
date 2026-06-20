@@ -1,0 +1,38 @@
+# Statutory
+
+> A living rulebook of the exact statutes, agency rules, and rates that govern your practice — by state and specialty. Statutory monitors primary government feeds daily and pushes a precise delta the moment a section you rely on changes, each with a span-verified citation, effective dates, and a ready-to-send client-alert draft you can bill.
+
+## What it is
+
+Statutory assembles a living rulebook for solo and small-firm professionals: a "your rules" wiki where each section is a topic pinned to its primary source and versioned with effective-date history. It watches the registers so you don't have to — daily diff monitoring of statute and register feeds — and synthesizes changes into deltas you can act on, with a citation behind every line. It is a research and monitoring tool, not legal, tax, accounting, or compliance advice.
+
+## Who it's for
+
+Solo and small-firm professionals who already pay out of pocket for currency (CLE, Westlaw, a research seat) and need a digest scoped to their exact practice — their jurisdictions, practice areas, and client types — pushed when it matters, in language they can hand a client.
+
+## Key features
+
+- Living rulebook scoped to your jurisdictions, practice areas, and client types.
+- Delta engine: changes are pushed, not searched, with effective dates and affected sections flagged.
+- Span-verified citations: every quoted span must string-match the retrieved source text; effective dates are extracted and cross-checked. Anything that fails verification is blocked and routed to a human reviewer.
+- Primary open-government sources: Federal Register, eCFR, GovInfo, CourtListener, state registers, and agency RSS — crawl-friendly and free of publisher paywalls.
+- Billable artifact: each delta arrives by email and Slack with a drafted client alert (plain-language summary, citation, effective date), exportable to Word or PDF.
+
+## Pricing
+
+Pre-launch reference pricing; annual billing is the default. Final tiers and coverage may change.
+
+- Core — $49/mo (billed annually at $468): living rulebook for one jurisdiction bundle, daily delta alerts by email and Slack, unlimited client-alert drafts, span-verified citations and effective dates.
+- Practice Pro — $99/mo (Most popular): everything in Core, multi-specialty coverage, effective-date history exports, white-labeled client alerts.
+- Small Firm — $149/mo: 3 seats on one shared rulebook, everything in Practice Pro, additional jurisdictions from $15–19/mo each, shared effective-date history.
+
+## FAQ highlights
+
+- Coverage: At launch, federal sources plus a focused set of states; the team would rather cover federal and a dozen states deeply than claim all fifty and under-deliver.
+- Accuracy: Citations are span-verified and trustworthy, but no monitoring tool can promise perfect completeness (local ordinances, sub-regulatory guidance, and case law can fall outside any feed). It is a first line of defense, not a guarantee.
+- Not advice: Statutory is not legal, tax, accounting, or compliance advice; client-alert drafts are starting points for a licensed professional to review and stand behind.
+- Differentiation: Unlike pull-based search (Westlaw/Lexis), unscoped agency newsletters, or generic chatbots, Statutory is a personalized living digest scoped to your practice, with verified citations and a billable artifact per change.
+
+## Link
+
+- https://asmuelle.github.io/statutory/
