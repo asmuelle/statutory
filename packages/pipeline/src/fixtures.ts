@@ -43,6 +43,6 @@ export const readFixture = (fixturesDir: string, relativePath: string): string =
   try {
     return readFileSync(fullPath, 'utf8');
   } catch (cause) {
-    throw new Error(`Failed to read fixture ${fullPath}: ${String(cause)}`);
+    throw new Error(`Failed to read fixture ${fullPath}: ${String(cause)}`, { cause });
   }
 };
