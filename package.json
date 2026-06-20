@@ -22,16 +22,16 @@
     "build": "pnpm -r build"
   },
   "devDependencies": {
-    "@eslint/js": "^9.30.0",
-    "@types/node": "^22.15.0",
-    "@vitest/coverage-v8": "^3.2.0",
-    "eslint": "^9.30.0",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.0.0",
+    "@vitest/coverage-v8": "^4.1.9",
+    "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.0",
     "prettier": "^3.5.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.8.0",
-    "typescript-eslint": "^8.35.0",
-    "vitest": "^3.2.0"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1",
+    "vitest": "^4.1.9"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

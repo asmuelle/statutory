@@ -23,9 +23,9 @@
   "devDependencies": {
     "@statutory/core": "workspace:*",
     "@statutory/pipeline": "workspace:*",
-    "@types/node": "^22.15.0",
+    "@types/node": "^26.0.0",
     "@types/pg": "^8.15.0",
     "drizzle-kit": "^0.31.0",
-    "typescript": "^5.8.0"
+    "typescript": "^6.0.3"
   }
 }
