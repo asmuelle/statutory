@@ -1,5 +1,7 @@
 # Statutory
 
+[![CI](https://github.com/asmuelle/statutory/actions/workflows/ci.yml/badge.svg)](https://github.com/asmuelle/statutory/actions/workflows/ci.yml)
+
 > An UpToDate for solo professionals: a living rulebook of the exact statutes, agency rules, and rates that govern your practice — by state and specialty — with deltas pushed when something you rely on changes, plus a ready-to-send client-alert draft that turns the subscription into billable output.
 
 **Category:** LLM wiki / auto-research (living documents + delta alerts, à la Karpathy) · 
