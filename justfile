@@ -77,6 +77,10 @@ lint: _bootstrapped
 format: _bootstrapped
     pnpm format
 
+# audit dependencies for high+ severity advisories; CI gate
+audit: _bootstrapped
+    pnpm audit --audit-level=high
+
 # Type-check the workspace (tsc --noEmit)
 typecheck: _bootstrapped
     pnpm typecheck
@@ -86,4 +90,4 @@ build: _bootstrapped
     pnpm build
 
 # Full gate: lint + typecheck + test + build (must be green before commit)
-ci: lint typecheck test build
+ci: lint typecheck test build audit

@@ -17,6 +17,7 @@
     "e2e": "pnpm --filter @statutory/web e2e",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "typecheck": "pnpm -r typecheck",
     "build": "pnpm -r build"
   },
