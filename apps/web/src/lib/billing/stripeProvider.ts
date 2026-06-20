@@ -22,7 +22,7 @@ const stripeSubscriptionSchema = z.object({
   id: z.string(),
   status: z.string(),
   created: z.number(),
-  metadata: z.record(z.string()),
+  metadata: z.record(z.string(), z.string()),
 });
 
 const stripeSearchSchema = z.object({
