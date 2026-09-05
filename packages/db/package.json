@@ -18,13 +18,13 @@
   },
   "dependencies": {
     "drizzle-orm": "^0.45.2",
-    "pg": "^8.22.0"
+    "pg": "^8.23.0"
   },
   "devDependencies": {
     "@statutory/core": "workspace:*",
     "@statutory/pipeline": "workspace:*",
     "@types/node": "^26.0.0",
-    "@types/pg": "^8.15.0",
+    "@types/pg": "^8.23.1",
     "drizzle-kit": "^0.31.0",
     "typescript": "^6.0.3"
   }
